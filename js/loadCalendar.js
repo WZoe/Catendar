@@ -86,10 +86,7 @@ function clearEvents () {
     //$("#day-" + month + "-" + date).empty();
 }
 
-// load all events shown on current month calendar grids
-function loadEvents () {
-    clearEvents();
-
+function createTimeDataForAjax () {
     // query current month + prev & next several days group by day
     let data = {};
     data["currentYear"] = currentMonth.year;
@@ -109,6 +106,15 @@ function loadEvents () {
         data["nextMonthEndDate"] = daysInCurrentMonth[daysInCurrentMonth.length - 1].getDate();
     }
     //console.log(data);
+    return data;
+}
+
+// load all events shown on current month calendar grids
+function loadEvents () {
+    clearEvents();
+
+    // create time data
+    let data = createTimeDataForAjax();
 
     // day.getMonth() -- [0,11]->[Jan,Dec]
     const phpFile = "loadCalendar.php";
