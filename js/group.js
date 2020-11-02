@@ -4,13 +4,12 @@ function getGroupList() {
         $("#grouplist").html("                        <a href=\"#\" class=\"list-group-item list-group-item-action active\" data-toggle=\"list\" id='groupAllEvents'>\n" +
             "                            All Events\n" +
             "                        </a>\n" +
-            "                        <a href=\"#\" class=\"list-group-item list-group-item-action\" data-toggle=\"list\" id='groupYourEvents'>Your Events</a><div id='otherGroups'>")
+            "                        <a href=\"#\" class=\"list-group-item list-group-item-action\" data-toggle=\"list\" id='groupYourEvents'>Your Events</a>")
         data.forEach(function(item) {
             $("#grouplist").append(`
         <a href="#" class="list-group-item list-group-item-action" data-toggle="list" id="group${item.group_id}">${item.group_name}</a>
         `)
         })
-        $("#grouplist").html("</div>")
     }, "json")
 }
 
@@ -44,20 +43,22 @@ function groupClick(group_id) {
     // clear cal
     // fetch events of group_id
 }
-// bond actions to each group button
-//todo:bond to showAll function
-$("#groupAllEvents").click()
-
-//todo:bond to showPersonal function
-$("#groupYourEvents").click()
 
 //bond to group
 // modified from https://stackoverflow.com/questions/4109376/jquery-iterate-over-child-elements
-$("#otherGroups").children("a").each(function (i) {
-    $(this).click(function () {
-        //get group id
-        let group_id = this.attr("id")
-        group_id = parseInt(group_id.slice(6))
-        groupClick(group_id)
-    })
+$("#grouplist").children("a").each(function (i) {
+    if (i===0) {
+        //todo:bond to showAll function
+        $("#groupAllEvents").click()
+    } else if (i===1) {
+        //todo:bond to showPersonal function
+        $("#groupYourEvents").click()
+    } else {
+        $(this).click(function () {
+            //get group id
+            let group_id = this.attr("id")
+            group_id = parseInt(group_id.slice(6))
+            groupClick(group_id)
+        })
+    }
 })
