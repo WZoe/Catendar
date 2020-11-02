@@ -6,7 +6,7 @@ $("#login").click(function () {
         //send login msg
         //if success
         if (data.success) {
-            userInit(data)
+            userInit()
         } else {
             //if fail, alert
             let msg = data.message
@@ -29,7 +29,7 @@ $("#signup").click(function () {
         //send register msg
         //if sucess
         if (data.success) {
-            userInit(data)
+            userInit()
         } else {
             //if fail, alert
             let msg = data.message
@@ -47,8 +47,7 @@ $("#signup").click(function () {
 //logout
 $("#logout").click(function () {
     //send log out request
-    $.get("logOut.php", function (data) {
-        //guest init
-        guestInit()
+    $.get("logOut.php", function () {
+        userInit()
     })
 })
