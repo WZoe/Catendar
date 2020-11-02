@@ -2,6 +2,7 @@
 let currentMonth;
 
 $(document).ready(function () {
+
     // initial calendar loading
     getCurrentMonth();
     updateCalendar(currentMonth);
@@ -30,9 +31,13 @@ function getNextMonth () {
     updateCalendar();
 }
 
+function clearCalendar () {
+    $("#calendar-weeks").empty();
+}
+
 function updateCalendar () {
     // empty previous calendar
-    $("#calendar-weeks").empty();
+    clearCalendar();
 
     // update title info
     updateTitle();
@@ -42,7 +47,6 @@ function updateCalendar () {
 
     // highlight current date
     hightlightCurrentDate();
-
 }
 
 function updateTitle () {
@@ -57,6 +61,70 @@ function hightlightCurrentDate () {
         let currentDate = currentD.getDate();
         $("#day-" + currentDate).css("background-color", "PaleTurquoise");
     }
+}
+
+// load daily events using ajax
+function loadEvents (day) {
+    const phpFile = "loadCalendar.php";
+    // just for debug
+    const data = { 'year': day.getFullYear(), 'month': day.getMonth() + 1, 'date': day.getDate() };
+    //const data = { 'year': day.getFullYear(), 'month': day.getMonth(), 'date': day.getDate() };
+    fetch(phpFile, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { 'content-type': 'application/json' }
+    })
+        .then(response => response.json())
+        .then(events => displayOnHTML(day, events))
+        .catch(err => console.error(err));
+}
+
+// display returned daily events on HTML
+function displayOnHTML (day, events) {
+    let eventFrame = document.getElementById("day-" + day.getDate());
+    if (events.personal_events.length != 0) {
+        for (let event_id in events.personal_events) {
+
+            let event = createPersonalEvent(events.personal_events[event_id]);
+            eventFrame.appendChild(event);
+        }
+    }
+    if (events.shared_events.length != 0) {
+        for (let event_id in events.shared_events) {
+            let event = createSharedEvent(events.shared_events[event_id]);
+            eventFrame.appendChild(event);
+        }
+    }
+    if (events.group_events.length != 0) {
+        for (let event_id in events.group_events) {
+            let event = createGroupEvent(events.group_events[event_id]);
+            eventFrame.appendChild(event);
+        }
+    }
+}
+
+function createPersonalEvent (event) {
+    let eventElement = document.createElement("div");
+    eventElement.innerHTML = event.title;
+    eventElement.setAttribute("class", "event user_event");
+    eventElement.setAttribute("id", "event-" + event.event_id);
+    return eventElement;
+}
+
+function createSharedEvent (event) {
+    let eventElement = document.createElement("div");
+    eventElement.innerHTML = event.title;
+    eventElement.setAttribute("class", "event shared_event");
+    eventElement.setAttribute("id", "event-" + event.event_id);
+    return eventElement;
+}
+
+function createGroupEvent (event) {
+    let eventElement = document.createElement("div");
+    eventElement.innerHTML = event.title;
+    eventElement.setAttribute("class", "event group_event");
+    eventElement.setAttribute("id", "event-" + event.event_id);
+    return eventElement;
 }
 
 function fillNewMonth () {
@@ -76,22 +144,19 @@ function fillNewMonth () {
             let dayElement = document.createElement("th");
             dayElement.setAttribute("class", "cell");
             dayElement.setAttribute("id", "day-" + date);
+
             let dayNumber = document.createElement("p");
             dayNumber.innerHTML = date;
-            let dayIndividualEvent = document.createElement("div");
-            dayIndividualEvent.innerHTML = "individual";
-            dayIndividualEvent.setAttribute("class", "event user_event");
-            let daySharedEvent = document.createElement("div");
-            daySharedEvent.setAttribute("class", "event shared_event")
-            daySharedEvent.innerHTML = "shared";
-            let dayGroupEvent = document.createElement("div");
-            dayGroupEvent.setAttribute("class", "event group_event")
-            dayGroupEvent.innerHTML = "group";
             dayElement.appendChild(dayNumber);
-            dayElement.appendChild(dayIndividualEvent);
-            dayElement.appendChild(daySharedEvent);
-            dayElement.appendChild(dayGroupEvent);
+
+            // fade out days that don't belong to this month
+            if ((weekId == 0 && date > 20) || (weekId == (weeks.length - 1) && date < 20)) {
+                dayElement.setAttribute("style", "background-color: DarkGrey");
+            }
             weekElement.appendChild(dayElement);
+
+            // load daily events
+            loadEvents(day);
         }
     }
 }
