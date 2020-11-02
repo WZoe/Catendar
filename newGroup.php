@@ -5,8 +5,6 @@ session_start();
 
 $name = preg_match('/[A-Za-z0-9_\s*#<>?!.,"\']+$/', $_POST['name']) ? $_POST['name'] : "";
 $members = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['members']) ? $_POST['members'] : "";
-//$name="aaa";
-//$members="eimee";
 
 if ($name == "" || $members == "") {
     echo json_encode(array(

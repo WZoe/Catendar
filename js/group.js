@@ -18,17 +18,18 @@ $("#newgroup").click(function () {
     //creating an adding modal
     let groupName = $("#groupname").val()
     let members = $("#members").val()
-    $('#newGroupModal').modal('toggle');
+
     $.post("newGroup.php", {"name": groupName, "members": members}, function (data){
         if(data.success) {
             // not reacting to these
             // reload group list
+            $('#newGroupModal').modal('toggle');
             getGroupList()
         } else {
             //if fail, alert
             let msg = data.message
             // this is cited from https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
-            $("#groups").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
+            $("#newGroupModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
  ${msg}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
