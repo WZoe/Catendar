@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- Citation End -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
@@ -15,201 +15,212 @@
 </head>
 
 <body class="bg-primary">
-<div class="container">
-    <div class="row">
-        <!--        Left column-->
-        <div class="col-3 m-3">
-            <div class="row">
-                <div class="col-2 mr-1"><i class="fas fa-cat fa-3x"></i></div>
-                <div class="col-8">
-                    <h1>Catendar</h1>
-                </div>
-            </div>
-
-            <!--                js should process user info, login/signup here-->
-            <!--                todo: judge session status, display different content(if not logged in, only see sign up/login, no tags not groups and no events.)）-->
-            <div id="userinfo" class="row m-2" >
-                <h4>Welcome back, username!</h4>
-                <button class="btn btn-secondary btn-block" id="logout">Log Out</button>
-            </div>
-            <div class="row mt-4" id="guest">
-                <form class="col-12">
-                    <div class="form-group align-middle">
-                        <input class="form-control" type="text" id="username" name="username"
-                               placeholder="Username"/>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="password" id="password" name="password"
-                               placeholder="Password"/>
-                    </div>
-                </form>
-                <!--                todo: sign up -->
-                <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
-                <!--                todo: login -->
-                <button class="btn btn-secondary btn-block" id="login">Log In</button>
-            </div>
-            <!--                    todo: hidden when not logged in-->
-            <div id="additionalinfo" >
-                <div class="row pt-3">
-                    <div class="col-1 mt-1"><i class="fas fa-tags fa-lg"></i></div>
-                    <h4 class="col">Tags</h4>
-                </div>
-                <div class="row m-2">
-                    <!--                list-group is modified from https://getbootstrap.com/docs/4.0/components/list-group/-->
-                    <div class="col-12 list-group">
-                        <!--                    todo: on clicking different tags, reload events-->
-                        <a href="#" class="list-group-item list-group-item-action active" data-toggle="list" id="all">
-                            All Events
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action" data-toggle="list" id="personal">Personal</a>
-                        <a href="#" class="list-group-item list-group-item-action" data-toggle="list" id="birthday">Birthdays</a>
-                        <a href="#" class="list-group-item list-group-item-action" data-toggle="list" id="work">Work</a>
-                        <a href="#" class="list-group-item list-group-item-action" data-toggle="list" id="school">School</a>
-                        <a href="#" class="list-group-item list-group-item-action" data-toggle="list" id="holiday">Holiday</a>
+    <div class="container">
+        <div class="row">
+            <!--        Left column-->
+            <div class="col-3 m-3">
+                <div class="row">
+                    <div class="col-2 mr-1"><i class="fas fa-cat fa-3x"></i></div>
+                    <div class="col-8">
+                        <h1>Catendar</h1>
                     </div>
                 </div>
 
-                <div class="row pt-3" id="groups">
-                    <div class="col-1 mt-1"><i class="fas fa-users fa-lg"></i></div>
-                    <h4 class="col-8">Groups</h4>
-                    <!--                todo: add group and reload group data-->
-                    <button class="col-2 btn btn-primary" data-toggle="modal" data-target="#newGroupModal"><i class="fas fa-plus"></i></button>
+                <!--                js should process user info, login/signup here-->
+                <!--                todo: judge session status, display different content(if not logged in, only see sign up/login, no tags not groups and no events.)）-->
+                <div id="userinfo" class="row m-2">
+                    <h4>Welcome back, username!</h4>
+                    <button class="btn btn-secondary btn-block" id="logout">Log Out</button>
                 </div>
-<!--                modal is modified from https://getbootstrap.com/docs/4.0/components/modal/-->
-                <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog" aria-labelledby="Create New Group" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Create New Group</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <!--                form group is modified from https://getbootstrap.com/docs/4.0/components/forms/-->
-                                <div class="form-group">
-                                    <label for="groupname">Group Name </label>
-                                    <input class="form-control" type="text" id="groupname" name="groupname"/>
+                <div class="row mt-4" id="guest">
+                    <form class="col-12">
+                        <div class="form-group align-middle">
+                            <input class="form-control" type="text" id="username" name="username"
+                                placeholder="Username" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" id="password" name="password"
+                                placeholder="Password" />
+                        </div>
+                    </form>
+                    <!--                todo: sign up -->
+                    <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
+                    <!--                todo: login -->
+                    <button class="btn btn-secondary btn-block" id="login">Log In</button>
+                </div>
+                <!--                    todo: hidden when not logged in-->
+                <div id="additionalinfo">
+                    <div class="row pt-3">
+                        <div class="col-1 mt-1"><i class="fas fa-tags fa-lg"></i></div>
+                        <h4 class="col">Tags</h4>
+                    </div>
+                    <div class="row m-2">
+                        <!--                list-group is modified from https://getbootstrap.com/docs/4.0/components/list-group/-->
+                        <div class="col-12 list-group" id="taglist">
+                            <!--                    todo: on clicking different tags, reload events-->
+                            <a href="#" class="list-group-item list-group-item-action active" data-toggle="list"
+                                id="all">
+                                All Events
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="list"
+                                id="personal">Personal</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="list"
+                                id="birthday">Birthdays</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="list"
+                                id="work">Work</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="list"
+                                id="school">School</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="list"
+                                id="holiday">Holiday</a>
+                        </div>
+                    </div>
+
+                    <div class="row pt-3" id="groups">
+                        <div class="col-1 mt-1"><i class="fas fa-users fa-lg"></i></div>
+                        <h4 class="col-8">Groups</h4>
+                        <!--                todo: add group and reload group data-->
+                        <button class="col-2 btn btn-primary" data-toggle="modal" data-target="#newGroupModal"><i
+                                class="fas fa-plus"></i></button>
+                    </div>
+                    <!--                modal is modified from https://getbootstrap.com/docs/4.0/components/modal/-->
+                    <div class="modal fade" id="newGroupModal" tabindex="-1" role="dialog"
+                        aria-labelledby="Create New Group" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Create New Group</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                                <div class="form-group">
-                                    <label for="members">Members</label>
-                                    <input class="form-control" type="text" id="members" name="members" placeholder="Alex Bob Cathy"/>
-                                    <small id="membershelp" class="form-text text-muted">Please use whitespace to separate the additional usernames.</small>
+                                <div class="modal-body">
+                                    <!--                form group is modified from https://getbootstrap.com/docs/4.0/components/forms/-->
+                                    <div class="form-group">
+                                        <label for="groupname">Group Name </label>
+                                        <input class="form-control" type="text" id="groupname" name="groupname" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="members">Members</label>
+                                        <input class="form-control" type="text" id="members" name="members"
+                                            placeholder="Alex Bob Cathy" />
+                                        <small id="membershelp" class="form-text text-muted">Please use whitespace to
+                                            separate the additional usernames.</small>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="newgroup">Create</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="newgroup">Create</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row m-2">
-                    <!--                list-group is modified from https://getbootstrap.com/docs/4.0/components/list-group/-->
-                    <div class="col-12 list-group" id="grouplist">
-                        <!--                    todo: load all groups on page load-->
-                        <!--                    todo: on click show group events-->
-                        <a href="#" class="list-group-item list-group-item-action active">
-                            All Events
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">Your Events</a>
-                        <!--js should present other extra groups here-->
+                    <div class="row m-2">
+                        <!--                list-group is modified from https://getbootstrap.com/docs/4.0/components/list-group/-->
+                        <div class="col-12 list-group" id="grouplist">
+                            <!--                    todo: load all groups on page load-->
+                            <!--                    todo: on click show group events-->
+                            <a href="#" class="list-group-item list-group-item-action active">
+                                All Events
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">Your Events</a>
+                            <!--js should present other extra groups here-->
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--        right col-->
-        <div class="col mr-1">
-            <div class="row mt-3">
-                <!--                todo: prev month, update events and current month-->
-                <button class="col-1 btn btn-secondary" id="prev"><i class="fas fa-chevron-left fa-2x"></i></button>
-                <div class="col-1"></div>
-                <!--                todo: next month, update events and current month-->
-                <button class="col-1 btn btn-secondary" id="next"><i
-                        class="fas fa-chevron-right fa-2x"></i></button>
-                <h2 class="col-6 text-center" id="current">2020/11</h2>
-                <!--                btn-group is modified from https://getbootstrap.com/docs/4.0/components/button-group/-->
-                <div class="btn-group col-3" role="group" id="eventbtn">
-                    <!--                    todo: group add-->
-                    <button class="btn btn-secondary" id="newgroupevent"><i class="fas fa-users fa-lg"></i><i
-                            class="fas fa-plus fa-lg"></i></button>
-                    <!--                    todo: personal add-->
-                    <button class="btn btn-primary" id="newevent"><i class="fas fa-plus fa-2x"></i></button>
-                </div>
+            <!--        right col-->
+            <div class="col mr-1">
+                <div class="row mt-3">
+                    <!--                todo: prev month, update events and current month-->
+                    <button class="col-1 btn btn-secondary" id="prev"><i class="fas fa-chevron-left fa-2x"></i></button>
+                    <div class="col-1"></div>
+                    <!--                todo: next month, update events and current month-->
+                    <button class="col-1 btn btn-secondary" id="next"><i
+                            class="fas fa-chevron-right fa-2x"></i></button>
+                    <h2 class="col-6 text-center" id="current">2020/11</h2>
+                    <!--                btn-group is modified from https://getbootstrap.com/docs/4.0/components/button-group/-->
+                    <div class="btn-group col-3" role="group" id="eventbtn">
+                        <!--                    todo: group add-->
+                        <button class="btn btn-secondary" id="newgroupevent"><i class="fas fa-users fa-lg"></i><i
+                                class="fas fa-plus fa-lg"></i></button>
+                        <!--                    todo: personal add-->
+                        <button class="btn btn-primary" id="newevent"><i class="fas fa-plus fa-2x"></i></button>
+                    </div>
 
-            </div>
-            <!--            calendar main body-->
-            <div class="row mt-1">
-                <table class="table table-bordered">
-                    <thead class="bg-primary text-white text-center">
-                    <tr>
-                        <th class="bg-secondary">SUN</th>
-                        <th>MON</th>
-                        <th>TUE</th>
-                        <th>WED</th>
-                        <th>THU</th>
-                        <th>FRI</th>
-                        <th class="bg-secondary">SAT</th>
-                    </tr>
-                    </thead>
-                    <tbody id="calendar-weeks">
-                    <!--                    todo: load 日期, load events-->
-                    <!--todo: event detail-->
-                    <!--todo: edit event-->
-                    <!--todo: delete event-->
-                    <!--todo: share event-->
-                    <tr id="week1">
-                        <th class="cell">
-                            <!--                            example event record-->
-                            <p>1</p>
-                            <div class="event user_event">
-                                aasdafdsaba
-                            </div>
-                            <div class="event shared_event">
-                                example event
-                            </div>
-                        </th>
-                        <th class="cell"></th>
-                        <th class="cell"></th>
-                        <th class="cell"></th>
-                        <th class="cell"></th>
-                        <th class="cell"></th>
-                        <th class="cell"></th>
-                    </tr>
-                    </tbody>
-                </table>
+                </div>
+                <!--            calendar main body-->
+                <div class="row mt-1">
+                    <table class="table table-bordered">
+                        <thead class="bg-primary text-white text-center">
+                            <tr>
+                                <th class="bg-secondary">SUN</th>
+                                <th>MON</th>
+                                <th>TUE</th>
+                                <th>WED</th>
+                                <th>THU</th>
+                                <th>FRI</th>
+                                <th class="bg-secondary">SAT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-weeks">
+                            <!--                    todo: load 日期, load events-->
+                            <!--todo: event detail-->
+                            <!--todo: edit event-->
+                            <!--todo: delete event-->
+                            <!--todo: share event-->
+                            <tr id="week1">
+                                <th class="cell">
+                                    <!--                            example event record-->
+                                    <p>1</p>
+                                    <div class="event user_event">
+                                        aasdafdsaba
+                                    </div>
+                                    <div class="event shared_event">
+                                        example event
+                                    </div>
+                                </th>
+                                <th class="cell"></th>
+                                <th class="cell"></th>
+                                <th class="cell"></th>
+                                <th class="cell"></th>
+                                <th class="cell"></th>
+                                <th class="cell"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<footer>
-    <p class="lead mx-auto footer">Zoe Wang & Eimee Yang, 2020/11</p>
-</footer>
-<!-- The following line is cited from https://getbootstrap.com/docs/4.5/getting-started/introduction/ and https://fontawesome.com/-->
-<!-- font awesome -->
-<script src="https://kit.fontawesome.com/b53fd5134a.js" crossorigin="anonymous"></script>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    <footer>
+        <p class="lead mx-auto footer">Zoe Wang & Eimee Yang, 2020/11</p>
+    </footer>
+    <!-- The following line is cited from https://getbootstrap.com/docs/4.5/getting-started/introduction/ and https://fontawesome.com/-->
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/b53fd5134a.js" crossorigin="anonymous"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-<!--Course wiki-->
-<script src="http://classes.engineering.wustl.edu/cse330/content/calendar.min.js"></script>
-<!-- Citation End -->
-<!-- load calendar -->
-<script src="js/loadCalendar.js"></script>
-<script src="js/leftInit.js"></script>
-<script src="js/user.js"></script>
-<script src="js/group.js"></script>
+    <!--Course wiki-->
+    <script src="http://classes.engineering.wustl.edu/cse330/content/calendar.min.js"></script>
+    <!-- Citation End -->
+    <!-- load calendar -->
+    <script src="js/loadCalendar.js"></script>
+    <script src="js/leftInit.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/group.js"></script>
+    <script src="js/tag.js"></script>
 </body>
 
 </html>
