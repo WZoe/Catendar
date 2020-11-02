@@ -1,6 +1,6 @@
 $(document).ready(userInit());
 
-function userInit() {
+function userInit () {
     let userinfo = document.getElementById("userinfo");
     let additionalinfo = document.getElementById("additionalinfo");
     let eventbtn = document.getElementById("eventbtn");
@@ -14,6 +14,7 @@ function userInit() {
             guest.removeAttribute("hidden");
 
             //clear events
+            clearEvents();
         } else {
             userinfo.removeAttribute("hidden");
             additionalinfo.removeAttribute("hidden");
@@ -23,8 +24,9 @@ function userInit() {
             $("#userinfo > h4").text(`Welcome back, ${data.username}`)
 
             // group load
-            getGroupList()
+            getGroupList();
             //event load
+            loadEvents();
         }
     })
 

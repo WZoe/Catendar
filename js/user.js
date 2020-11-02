@@ -3,7 +3,7 @@
 $("#login").click(function () {
     let username = $("#username").val()
     let password = $("#password").val()
-    $.post("logIn.php", {'username': username, 'password': password}, function (data) {
+    $.post("logIn.php", { 'username': username, 'password': password }, function (data) {
         //send login msg
         //if success
         if (data.success) {
@@ -26,7 +26,7 @@ $("#login").click(function () {
 $("#signup").click(function () {
     let username = $("#username").val()
     let password = $("#password").val()
-    $.post("signUp.php", {'username': username, 'password': password}, function (data) {
+    $.post("signUp.php", { 'username': username, 'password': password }, function (data) {
         //send register msg
         //if sucess
         if (data.success) {

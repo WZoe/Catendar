@@ -64,24 +64,28 @@ function updateTitle () {
 
 function hightlightCurrentDate () {
     let currentD = new Date();
-    let currentY = currentD.getFullYear();
-    let currentM = currentD.getMonth();
-    if (currentMonth.month == currentM && currentMonth.year == currentY) {
-        let currentDate = currentD.getDate();
-        $("#day-" + currentDate).css("background-color", "PaleTurquoise");
+    let year = currentD.getFullYear();
+    let month = currentD.getMonth() + 1;
+    let date = currentD.getDate();
+    if (currentMonth.year == year && (currentMonth.month + 1) == month) {
+        $("#day-" + month + "-" + date).css("background-color", "PaleTurquoise");
     }
 }
 
 // clear all events shown on current month calendar grids
 function clearEvents () {
+    console.log("enter clearEvents");
     for (let dayId in daysInCurrentMonth) {
         let day = daysInCurrentMonth[dayId];
-        $("#day-" + day["month"] + "-" + day["date"]).empty();
+        let month = day.getMonth() + 1;
+        let date = day.getDate();
+        $("#day-" + month + "-" + date).empty();
     }
 }
 
 // load all events shown on current month calendar grids
 function loadEvents () {
+    console.log("enter loadEvents");
     clearEvents();
 
     // query current month + prev & next several days group by day
