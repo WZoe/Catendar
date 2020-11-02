@@ -34,6 +34,13 @@
         $stmt_personal->execute();
         $stmt_personal->bind_result($event_id, $hour, $minute, $title, $description, $tag_id, $author_id);
         while ($stmt_personal->fetch()) {
+            // get author username
+            // $stmt_author = $mysqli->prepare("SELECT username FROM users WHERE id=?");
+            // $stmt_author->bind_param('i', $author_id);
+            // $stmt_author->execute();
+            // $stmt_author->bind_result($author_name);
+            // $stmt_author->fetch();
+            // $stmt_author->close();
             array_push($personal_events, array(
                 "event_id"=>$event_id,
                 "hour"=>$hour,
@@ -41,7 +48,7 @@
                 "title"=>$title,
                 "description"=>$description,
                 "tag_id"=>$tag_id,
-                "author_id"=>$author_id
+                "author_name"=>$author_id
             ));
         }
         $stmt_personal->close();
@@ -52,6 +59,13 @@
         $stmt_shared->execute();
         $stmt_shared->bind_result($event_id, $hour, $minute, $title, $description, $tag_id, $author_id);
         while ($stmt_shared->fetch()) {
+            // get author username
+            // $stmt_author = $mysqli->prepare("SELECT username FROM users WHERE id=?");
+            // $stmt_author->bind_param('i', $author_id);
+            // $stmt_author->execute();
+            // $stmt_author->bind_result($author_name);
+            // $stmt_author->fetch();
+            // $stmt_author->close();
             array_push($shared_events, array(
                 "event_id"=>$event_id,
                 "hour"=>$hour,
@@ -59,7 +73,7 @@
                 "title"=>$title,
                 "description"=>$description,
                 "tag_id"=>$tag_id,
-                "author_id"=>$author_id
+                "author_name"=>$author_id
             ));
         }
         $stmt_shared->close();
@@ -82,6 +96,20 @@
             $stmt_group2->execute();
             $stmt_group2->bind_result($event_id, $hour, $minute, $title, $description, $tag_id, $author_id);
             while ($stmt_group2->fetch()) {
+                // get author username
+                // $stmt_author = $mysqli->prepare("SELECT username FROM users WHERE id=?");
+                // $stmt_author->bind_param('i', $author_id);
+                // $stmt_author->execute();
+                // $stmt_author->bind_result($author_name);
+                // $stmt_author->fetch();
+                // $stmt_author->close();
+                // get group name
+                // $stmt_group3 = $mysqli->prepare("SELECT name FROM groups WHERE id=?");
+                // $stmt_group3->bind_param('i', $group_id);
+                // $stmt_group3->execute();
+                // $stmt_group3->bind_result($group_name);
+                // $stmt_group3->fetch();
+                // $stmt_group3->close();
                 array_push($group_events, array(
                     "event_id"=>$event_id,
                     "hour"=>$hour,
@@ -89,8 +117,8 @@
                     "title"=>$title,
                     "description"=>$description,
                     "tag_id"=>$tag_id,
-                    "author_id"=>$author_id,
-                    "group_id"=>$group_id
+                    "author_name"=>$author_id,
+                    "group_name"=>$group_id
                 ));
             }
             $stmt_group2->close();

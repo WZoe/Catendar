@@ -66,9 +66,7 @@ function hightlightCurrentDate () {
 // load daily events using ajax
 function loadEvents (day) {
     const phpFile = "loadCalendar.php";
-    // just for debug
-    const data = { 'year': day.getFullYear(), 'month': day.getMonth() + 1, 'date': day.getDate() };
-    //const data = { 'year': day.getFullYear(), 'month': day.getMonth(), 'date': day.getDate() };
+    const data = { 'year': day.getFullYear(), 'month': day.getMonth(), 'date': day.getDate() };
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
@@ -84,19 +82,22 @@ function displayOnHTML (day, events) {
     let eventFrame = document.getElementById("day-" + day.getDate());
     if (events.personal_events.length != 0) {
         for (let event_id in events.personal_events) {
-
+            console.log(events.personal_events[event_id].author_name);
             let event = createPersonalEvent(events.personal_events[event_id]);
             eventFrame.appendChild(event);
         }
     }
     if (events.shared_events.length != 0) {
         for (let event_id in events.shared_events) {
+            console.log(events.personal_events[event_id].author_name);
             let event = createSharedEvent(events.shared_events[event_id]);
             eventFrame.appendChild(event);
         }
     }
     if (events.group_events.length != 0) {
         for (let event_id in events.group_events) {
+            console.log(events.personal_events[event_id].author_name);
+            console.log(events.personal_events[event_id].group_name);
             let event = createGroupEvent(events.group_events[event_id]);
             eventFrame.appendChild(event);
         }
