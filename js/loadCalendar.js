@@ -6,7 +6,7 @@ $(document).ready(function () {
     // initial calendar loading
     getCurrentMonth();
     updateCalendar(currentMonth);
-    loadEvents();
+    // load events from user.js
 
     $("#prev").click(function (event) {
         getPreviousMonth();
@@ -74,18 +74,20 @@ function hightlightCurrentDate () {
 
 // clear all events shown on current month calendar grids
 function clearEvents () {
-    console.log("enter clearEvents");
     for (let dayId in daysInCurrentMonth) {
         let day = daysInCurrentMonth[dayId];
         let month = day.getMonth() + 1;
         let date = day.getDate();
-        $("#day-" + month + "-" + date).empty();
+        let dayFrame = document.getElementById("day-" + month + "-" + date);
+        while (dayFrame.lastChild.className !== "dateNumber") {
+            dayFrame.removeChild(dayFrame.lastChild);
+        }
     }
+    //$("#day-" + month + "-" + date).empty();
 }
 
 // load all events shown on current month calendar grids
 function loadEvents () {
-    console.log("enter loadEvents");
     clearEvents();
 
     // query current month + prev & next several days group by day
@@ -116,7 +118,7 @@ function loadEvents () {
         headers: { 'content-type': 'application/json' }
     })
         .then(response => response.json())
-        .then(events => displayOnHTML(events))
+        .then(data => data.success ? displayOnHTML(data) : console.log(data.message))
         .catch(err => console.error(err));
 }
 
@@ -213,10 +215,11 @@ function fillNewMonth () {
             let dayElement = document.createElement("th");
             dayElement.setAttribute("class", "cell");
             dayElement.setAttribute("id", "day-" + month + "-" + date);
-
-            let dayNumber = document.createElement("p");
-            dayNumber.innerHTML = date;
-            dayElement.appendChild(dayNumber);
+            // add date number
+            let dateNumber = document.createElement("p");
+            dateNumber.setAttribute("class", "dateNumber");
+            dateNumber.innerHTML = date;
+            dayElement.appendChild(dateNumber);
 
             // fade out days that don't belong to this month
             if ((weekId == 0 && date > 20) || (weekId == (weeks.length - 1) && date < 20)) {

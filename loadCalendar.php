@@ -1,27 +1,28 @@
 <?php
-    // retrieve json data from ajax
-    header("Content-Type: application/json");
-    // retrieve data posted via fetch()
-    $json_str = file_get_contents('php://input');
-    $json_obj = json_decode($json_str, true);
-    $currentYear = $json_obj['currentYear'];
-    $currentMonth = $json_obj['currentMonth'];
-    $prevMonth = $json_obj['prevMonth'];
-    $nextMonth = $json_obj['nextMonth'];
-    if($prevMonth != -1){
-        $prevMonthStartDate = $json_obj['prevMonthStartDate'];
-    }
-    if($nextMonth != -1){
-        $nextMonthEndDate = $json_obj['nextMonthEndDate'];
-    }
-
-    // TODO: verify user, sesssion start
     session_start();
     // make sure user is logged in
     if (!isset($_SESSION['id'])) {
-        header("Location: index.html");
-        // TODO: 看是否改成json_encode success=false的形式
+        echo json_encode(array(
+            "success"=>false,
+            "message"=>"user is not logged in"
+        ));
     } else {
+        // retrieve json data from ajax
+        header("Content-Type: application/json");
+        // retrieve data posted via fetch()
+        $json_str = file_get_contents('php://input');
+        $json_obj = json_decode($json_str, true);
+        $currentYear = $json_obj['currentYear'];
+        $currentMonth = $json_obj['currentMonth'];
+        $prevMonth = $json_obj['prevMonth'];
+        $nextMonth = $json_obj['nextMonth'];
+        if($prevMonth != -1){
+            $prevMonthStartDate = $json_obj['prevMonthStartDate'];
+        }
+        if($nextMonth != -1){
+            $nextMonthEndDate = $json_obj['nextMonthEndDate'];
+        }
+
         $personal_events = array();
         $shared_events = array();
         $group_events = array();
