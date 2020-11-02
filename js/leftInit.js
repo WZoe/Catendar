@@ -6,7 +6,6 @@ function userInit() {
     let eventbtn = document.getElementById("eventbtn");
     let guest = document.getElementById("guest");
     $.get("getUser.php", function (data) {
-        console.log(data)
         if (!data.active) {
             userinfo.setAttribute("hidden", true);
             additionalinfo.setAttribute("hidden", true);
@@ -24,7 +23,7 @@ function userInit() {
             $("#userinfo > h4").text(`Welcome back, ${data.username}`)
 
             // group load
-
+            getGroupList()
             //event load
         }
     })

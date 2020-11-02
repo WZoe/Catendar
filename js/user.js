@@ -1,3 +1,4 @@
+// jQuery.post() is modified from  https://api.jquery.com/jQuery.post/#jQuery-post-url-data-success-dataType
 //login
 $("#login").click(function () {
     let username = $("#username").val()
