@@ -28,11 +28,11 @@
 
             <!--                js should process user info, login/signup here-->
             <!--                todo: judge session status, display different content(if not logged in, only see sign up/login, no tags not groups and no events.)）-->
-            <div id="userinfo" class="row m-2">
+            <div id="userinfo" class="row m-2" >
                 <h4>Welcome back, username!</h4>
                 <button class="btn btn-secondary btn-block" id="logout">Log Out</button>
             </div>
-            <div class="row mt-4" id="guest" hidden>
+            <div class="row mt-4" id="guest">
                 <form class="col-12">
                     <div class="form-group align-middle">
                         <input class="form-control" type="text" id="username" name="username"
@@ -42,16 +42,14 @@
                         <input class="form-control" type="password" id="password" name="password"
                                placeholder="Password"/>
                     </div>
-                    <!--                todo: sign up -->
-                    <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
-                    <!--                todo: login -->
-                    <button class="btn btn-secondary btn-block" id="login">Log In</button>
-
-
                 </form>
+                <!--                todo: sign up -->
+                <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
+                <!--                todo: login -->
+                <button class="btn btn-secondary btn-block" id="login">Log In</button>
             </div>
             <!--                    todo: hidden when not logged in-->
-            <div id="additionalinfo">
+            <div id="additionalinfo" >
                 <div class="row pt-3">
                     <div class="col-1 mt-1"><i class="fas fa-tags fa-lg"></i></div>
                     <h4 class="col">Tags</h4>
@@ -103,8 +101,7 @@
                         class="fas fa-chevron-right fa-2x"></i></button>
                 <h2 class="col-6 text-center" id="current">2020/11</h2>
                 <!--                btn-group is modified from https://getbootstrap.com/docs/4.0/components/button-group/-->
-                <!--                    todo: hidden when not logged in-->
-                <div class="btn-group col-3" role="group">
+                <div class="btn-group col-3" role="group" id="eventbtn">
                     <!--                    todo: group add-->
                     <button class="btn btn-secondary" id="newgroupevent"><i class="fas fa-users fa-lg"></i><i
                             class="fas fa-plus fa-lg"></i></button>
@@ -170,6 +167,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
         crossorigin="anonymous"></script>
@@ -181,7 +179,8 @@
 <!-- Citation End -->
 <!-- load calendar -->
 <script src="js/loadCalendar.js"></script>
-<script src="js/userStatus.js"></script>
+<script src="js/leftInit.js"></script>
+<script src="js/user.js"></script>
 </body>
 
 </html>
