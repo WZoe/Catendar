@@ -17,4 +17,4 @@ username:eimee  password:eimee
 
 - User can share their events with other users, who will then get a duplicate event.
 
-- User can create groups and group events that display on multiple users' calendars.
+- User can create groups. Event created as group events will display on all members' calendars and members can cooperate on group events.

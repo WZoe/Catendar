@@ -266,7 +266,7 @@ function displayOnHTML (events) {
                     "hour": hour,
                     "minute": minute,
                     "description": description,
-                    "tag": tag,
+                    "tag": tag
                 }, function (data) {
                     if (data.success) {
                         $('#editEventModal').modal('toggle');
@@ -297,7 +297,7 @@ function displayOnHTML (events) {
                     // reload group list
                     $('#shareEventModal').modal('toggle');
                     //display success msg to father modal
-                    $("#editEventModalBody").append(`<div class="mt-1 alert alert-success alert-dismissible fade show" role="alert">
+                    $("#eventDetailModalBody").append(`<div class="mt-1 alert alert-success alert-dismissible fade show" role="alert">
     Shared event successfully sent!
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
