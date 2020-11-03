@@ -8,9 +8,9 @@ $(".month").change(function () {
     }
     let month = this.value
     $(".date").val(1)
-    if (month === 1 || month === 3 || month === 5 || month === 7 || month === 8 || month === 10 || month === 12) {
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
         $(".date").attr("max", 31)
-    } else if (month === 2) {
+    } else if (month == 2) {
         $(".date").attr("max", 29)
     } else {
         $(".date").attr("max", 30)

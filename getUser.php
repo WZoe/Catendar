@@ -18,7 +18,6 @@ if (isset($_SESSION['id'])) {
 //    active: true,
 //    id:,
 //    username:
-//      token:
 //} or
 //{
 //    active:false

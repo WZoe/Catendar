@@ -8,9 +8,9 @@
 http://ec2-54-191-166-77.us-west-2.compute.amazonaws.com/~zoewang/module5-group-module5-475518-474348/
 
 #### Suggested test user (or you can create your own)
-username:zoe
+username:zoe  password:zoe
 
-password:zoe
+username:eimee  password:eimee
 
 ## Creative portion
 - User can tag an event with particular category and look up events by tags.

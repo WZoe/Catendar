@@ -130,9 +130,10 @@ function loadEvents () {
         .catch(err => console.error(err));
 }
 
-// display returned daily events on HTML
+
+// display returned daily events on HTML and bond detail modals
 function displayOnHTML (events) {
-    console.log(events);
+    // console.log(events);
     // load personal events
     if (events.personal_events.length != 0) {
         for (let dayId in events.personal_events) {
@@ -172,6 +173,31 @@ function displayOnHTML (events) {
             }
         }
     }
+
+    //bond modal data loading request
+    $("#eventDetailModal").on("show.bs.modal", function (trigger){
+        //get event id
+        let event = $(trigger.relatedTarget)
+        let eventId = event.attr("id").slice(6)
+
+        //ask for event detail
+        //todo: csrf
+        $.post("getEventDetail.php",{"id": eventId}, function (data) {
+            if (data.success) {
+                // update modal info
+                console.log(data)
+                // basic info
+                $("#eventDetailTitle").text(data.title)
+                $("#eventDetailDes").text(data.description)
+                $("#eventDetailTime").text(`${data.hour}:${data.minute}`)
+                $("#eventDetailYMD").text(`${data.year}/${data.month}/${data.date}`)
+
+                // check if its group or personal, shared or original
+
+                //display content
+            }
+        })
+    })
 }
 
 function createPersonalEvent (event) {
@@ -179,6 +205,8 @@ function createPersonalEvent (event) {
     eventElement.innerHTML = event.title;
     eventElement.setAttribute("class", "event user_event");
     eventElement.setAttribute("id", "event-" + event.event_id);
+    eventElement.setAttribute("data-toggle", "modal");
+    eventElement.setAttribute("data-target", "#eventDetailModal");
     return eventElement;
 }
 
@@ -187,6 +215,8 @@ function createSharedEvent (event) {
     eventElement.innerHTML = event.title;
     eventElement.setAttribute("class", "event shared_event");
     eventElement.setAttribute("id", "event-" + event.event_id);
+    eventElement.setAttribute("data-toggle", "modal");
+    eventElement.setAttribute("data-target", "#eventDetailModal");
     return eventElement;
 }
 
@@ -195,6 +225,8 @@ function createGroupEvent (event) {
     eventElement.innerHTML = event.title;
     eventElement.setAttribute("class", "event group_event");
     eventElement.setAttribute("id", "event-" + event.event_id);
+    eventElement.setAttribute("data-toggle", "modal");
+    eventElement.setAttribute("data-target", "#eventDetailModal");
     return eventElement;
 }
 

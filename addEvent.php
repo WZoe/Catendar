@@ -30,3 +30,4 @@ if ($title == "") {
 }
 
 // todo:add group add events edit events share events CSRF
+//todo:make sure user is logged in

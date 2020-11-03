@@ -257,7 +257,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="newEventModal" tabindex="-1" role="dialog" aria-labelledby="Create New Group"
+    <div class="modal fade" id="newEventModal" tabindex="-1" role="dialog" aria-labelledby="Create"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -311,6 +311,45 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="submitEvent">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    event detail-->
+    <div class="modal fade" id="eventDetailModal" tabindex="-1" role="dialog" aria-labelledby="eventDetail"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Event Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="eventDetailModalBody">
+                    <h2 class="border-bottom mt-2 pb-3 ml-2 mr-2" id="eventDetailTitle">title</h2>
+                    <div class="row float-right mr-3 mt-2 mb-2 mr-2">
+                        <p>Created by <span id="author">author</span></p>
+                    </div>
+                    <div class="row ml-2 mt-3 mb-2">
+                        <h5>
+                        <span class="mr-2" id="eventDetailYMD">2020/11/1</span>
+                            <span class="mr-2" id="eventDetailTime">23:59</span></h5>
+                    </div>
+                    <div class="row ml-2 mt-2">
+                        <i class="fas fa-tags fa-lg mr-2"></i><p id="eventDetailTag">Default</p>
+                    </div>
+                    <div class="row ml-2 mt-2">
+                        <i class="fas fa-users fa-lg mr-2"></i><p id="eventDetailGroup">My Events</p>
+                    </div>
+                    <div class="row ml-2 mt-2">
+                        <p id="eventDetailDes">description description description description description description description description description description description description description description description description description description </p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="deleteEvent">Delete</button>
+                    <button type="button" class="btn btn-secondary" id="shareEvent">Share</button>
+                    <button type="button" class="btn btn-primary" id="editEvent">Edit</button>
                 </div>
             </div>
         </div>
