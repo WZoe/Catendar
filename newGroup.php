@@ -66,3 +66,4 @@ if ($name == "" || $members == "") {
 
 
 // success or not: user doesn't exist
+?>
