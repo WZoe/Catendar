@@ -316,7 +316,7 @@ function displayOnHTML (events) {
             $.post("deleteEvent.php", {"id":eventId}, function (data) {
                 if (data.success) {
                     //close modal and update events
-                    $("#editEventModal").modal("hide")
+                    $("#eventDetailModal").modal("hide")
                     loadEvents();
                     resetActiveInLeftBar();
                 } else {

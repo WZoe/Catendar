@@ -86,7 +86,6 @@ $("#submitEvent").click(function () {
         "description": description,
         "tag": tag
     }, function (data) {
-        console.log(data)
         if (data.success) {
             $('#newEventModal').modal('toggle');
             loadEvents();
