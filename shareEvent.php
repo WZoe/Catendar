@@ -9,21 +9,30 @@ $recipients = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['recipients']) ? $_POST['r
 if ($recipients == "") {
     echo json_encode(array(
         "success" => false,
-        "message" => "You need to specify recipients to share this event with"
+        "message" => "You need to specify recipients to share this event with."
     ));
 } else {
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
     // fetch original event
-    $stmt_fetchEvent = $mysqli->prepare("select year,month,date,hour,minute,title,description,user_id,author_id,tag_id from events where id=?");
-    $stmt_fetchEvent->bind_param('i', $event_id);
-    $stmt_fetchEvent->execute();
-    $stmt_fetchEvent->bind_result($year, $month, $date, $hour, $minute, $title, $description, $user_id, $author_id, $tag_id);
-    $stmt_fetchEvent->fetch();
-    $stmt_fetchEvent->close();
+    $stmt_fetchOriginalEvent = $mysqli->prepare("select year,month,date,hour,minute,title,description,user_id,author_id,group_id,tag_id from events where id=?");
+    $stmt_fetchOriginalEvent->bind_param('i', $event_id);
+    $stmt_fetchOriginalEvent->execute();
+    $stmt_fetchOriginalEvent->bind_result($year, $month, $date, $hour, $minute, $title, $description, $user_id, $author_id, $group_id, $tag_id);
+    $stmt_fetchOriginalEvent->fetch();
+    $stmt_fetchOriginalEvent->close();
+    // make sure it's not a group event
+    if($group_id){
+        echo json_encode(array(
+            "success" => false,
+            "message" => "Group event is not allowed to share to other users."
+        ));
+        exit();
+    }
+    // only author can share the event
     if($author_id != $_SESSION["id"]){
         echo json_encode(array(
             "success" => false,
-            "message" => "You are not the author, you don't have the right to share this event"
+            "message" => "Only the author has the right to share this event."
         ));
         exit();
     }
@@ -46,7 +55,7 @@ if ($recipients == "") {
                 "success" => false,
                 "message" => "Cannot find user " . $username
             ));
-            exit;
+            exit();
         } else {
             array_push($ids, $user_id);
         }
@@ -55,6 +64,22 @@ if ($recipients == "") {
 
     // insert shared event
     foreach ($ids as $user_id) {
+        // make sure the event is only shared once
+        // check if shared event already exists for this recipient
+        $stmt_fetchSharedEvent = $mysqli->prepare("select id from events where user_id=? AND author_id=?");
+        $stmt_fetchSharedEvent->bind_param('ii', $user_id, $author_id);
+        $stmt_fetchSharedEvent->execute();
+        $stmt_fetchSharedEvent->bind_result($existing_event_id);
+        $stmt_fetchSharedEvent->fetch();
+        $stmt_fetchSharedEvent->close();
+        if($existing_event_id){
+            echo json_encode(array(
+                "success" => false,
+                "message" => "This event is already shared to " . $username . ". Please try again."
+            ));
+            exit();
+        }
+
         //add shared event to all shared users
         $stmt_insertShared = $mysqli->prepare("insert into events (original_id, year, month,date,hour,minute,title,description,user_id,author_id,tag_id) values (?,?,?,?,?,?,?,?,?,?,?)");
         $stmt_insertShared->bind_param('iiiiiissiii', $event_id, $year, $month, $date,$hour,$minute,$title,$description,$user_id,$author_id,$tag_id);
@@ -68,8 +93,6 @@ if ($recipients == "") {
     ));
 
 }
-
-
 
 // success or not: user doesn't exist
 ?>
