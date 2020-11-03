@@ -1,10 +1,10 @@
 // date picker init
 $(".month").change(function () {
     if (this.value > 12) {
-        this.value=12
+        this.value = 12
     }
     if (this.value < 1) {
-        this.value=1
+        this.value = 1
     }
     let month = this.value
     $(".date").val(1)
@@ -17,11 +17,11 @@ $(".month").change(function () {
     }
 })
 $(".year").change(function () {
-    if (this.value >2100) {
-        this.value=2100
+    if (this.value > 2100) {
+        this.value = 2100
     }
     if (this.value < 1970) {
-        this.value=1970
+        this.value = 1970
     }
 })
 $(".date").change(function () {
@@ -34,19 +34,19 @@ $(".date").change(function () {
     }
 })
 $(".hour").change(function () {
-    if (this.value >23) {
-        this.value=23
+    if (this.value > 23) {
+        this.value = 23
     }
     if (this.value < 0) {
-        this.value=0
+        this.value = 0
     }
 })
 $(".minute").change(function () {
-    if (this.value >59) {
-        this.value=59
+    if (this.value > 59) {
+        this.value = 59
     }
     if (this.value < 0) {
-        this.value=0
+        this.value = 0
     }
 })
 
@@ -77,16 +77,17 @@ $("#submitEvent").click(function () {
         "title": title,
         "year": year,
         "month": month,
-        "date":date,
-        "hour":hour,
-        "minute":minute,
-        "description":description,
-        "tag":tag
+        "date": date,
+        "hour": hour,
+        "minute": minute,
+        "description": description,
+        "tag": tag
     }, function (data) {
         console.log(data)
         if (data.success) {
             $('#newEventModal').modal('toggle');
-            loadEvents()
+            loadEvents();
+            resetActiveInLeftBar();
         } else {
             //if fail, alert
             let msg = data.message
@@ -117,16 +118,17 @@ $("#submitGroupEvent").click(function () {
         "title": title,
         "year": year,
         "month": month,
-        "date":date,
-        "hour":hour,
-        "minute":minute,
-        "description":description,
-        "tag":tag,
-        "group":group
+        "date": date,
+        "hour": hour,
+        "minute": minute,
+        "description": description,
+        "tag": tag,
+        "group": group
     }, function (data) {
         if (data.success) {
             $('#newGroupEventModal').modal('toggle');
-            loadEvents()
+            loadEvents();
+            resetActiveInLeftBar();
         } else {
             //if fail, alert
             let msg = data.message
@@ -138,5 +140,24 @@ $("#submitGroupEvent").click(function () {
   </button>
 </div>`)
         }
-    },"json")
+    }, "json")
 })
+
+function resetActiveInLeftBar () {
+    resetActiveGroup();
+    resetActiveTag();
+}
+
+function resetActiveTag () {
+    // cancel old selected item
+    $("#taglist > a.active").removeClass("active");
+    // select default item
+    $("#taglist > a#1").addClass("active");
+}
+
+function resetActiveGroup () {
+    // cancel old selected item
+    $("#grouplist > a.active").removeClass("active");
+    // select default item
+    $("#grouplist > a#groupAllEvents").addClass("active");
+}

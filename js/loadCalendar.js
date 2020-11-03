@@ -29,6 +29,7 @@ function getPreviousMonth () {
     currentMonth = currentMonth.prevMonth();
     updateCalendar();
     loadEvents();
+    resetActiveInLeftBar();
 }
 
 // update calendar with next month
@@ -36,6 +37,7 @@ function getNextMonth () {
     currentMonth = currentMonth.nextMonth();
     updateCalendar();
     loadEvents();
+    resetActiveInLeftBar();
 }
 
 // clear calendar grids

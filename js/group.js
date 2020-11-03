@@ -45,6 +45,9 @@ function getGroupList () {
 function loadEventsOnClick () {
     $("#grouplist").children("a").each(function (idx) {
         $(this).click(function (event) {
+            // reset active tag to default (can't select both group and tag at the same time)
+            resetActiveTag();
+
             let id = event.target.id;
             // load all events
             if (id == "groupAllEvents") {
