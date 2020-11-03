@@ -4,12 +4,12 @@ ini_set("session.cookie_httponly", 1);
 session_start();
 
 $event_id=(int)$_POST["id"];
-$members = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['members']) ? $_POST['members'] : "";
+$recipients = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['recipients']) ? $_POST['recipients'] : "";
 
-if ($members == "") {
+if ($recipients == "") {
     echo json_encode(array(
         "success" => false,
-        "message" => "You need to specify members to share this event with"
+        "message" => "You need to specify recipients to share this event with"
     ));
 } else {
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
@@ -28,13 +28,12 @@ if ($members == "") {
         exit();
     }
 
-    $members = explode(" ", $members);
+    $recipients = explode(" ", $recipients);
     $ids = array();
-    array_push($ids, $_SESSION["id"]);
 
-    //fetch all members
+    //fetch all recipients
     // lookup user id
-    foreach ($members as $username) {
+    foreach ($recipients as $username) {
         $stmt_findUser = $mysqli->prepare("select id from users where username=?");
         $stmt_findUser->bind_param('s', $username);
         $stmt_findUser->execute();
@@ -57,14 +56,15 @@ if ($members == "") {
     // insert shared event
     foreach ($ids as $user_id) {
         //add shared event to all shared users
-        $stmt_insertShared = $mysqli->prepare("insert into events (original_id, year, month, date, hour, minute, title, description, user_id, author_id, tag_id) values (?,?,?,?,?,?,?,?,?)");
-        $stmt_insertShared->bind_param('iiiiiissiii', $event_id, $year, $month, $date, $hour, $minute, $title, $description, $user_id, $author_id, $tag_id);
+        $stmt_insertShared = $mysqli->prepare("insert into events (original_id, year, month,date,hour,minute,title,description,user_id,author_id,tag_id) values (?,?,?,?,?,?,?,?,?,?,?)");
+        $stmt_insertShared->bind_param('iiiiiissiii', $event_id, $year, $month, $date,$hour,$minute,$title,$description,$user_id,$author_id,$tag_id);
         $stmt_insertShared->execute();
         $stmt_insertShared->close();
     }
 
     echo json_encode(array(
-        "success" => true
+        "success" => true,
+        "recipients"=>$ids
     ));
 
 }
