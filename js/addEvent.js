@@ -88,6 +88,14 @@ $("#submitEvent").click(function () {
     }, function (data) {
         if (data.success) {
             $('#newEventModal').modal('toggle');
+            //empty input
+            $("#newEventName").val("")
+            $("#newEventYear").val(2020)
+            $("#newEventMonth").val(1)
+            $("#newEventDate").val(1)
+            $("#newEventHour").val("00")
+            $("#newEventMinute").val("00")
+            $("#newEventDes").val("")
             loadEvents();
             resetActiveInLeftBar();
         } else {
@@ -129,6 +137,14 @@ $("#submitGroupEvent").click(function () {
     }, function (data) {
         if (data.success) {
             $('#newGroupEventModal').modal('toggle');
+            //empty input
+            $("#newEventName").val("")
+            $("#newEventYear").val(2020)
+            $("#newEventMonth").val(1)
+            $("#newEventDate").val(1)
+            $("#newEventHour").val("00")
+            $("#newEventMinute").val("00")
+            $("#newEventDes").val("")
             loadEvents();
             resetActiveInLeftBar();
         } else {

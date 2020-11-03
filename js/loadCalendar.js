@@ -199,10 +199,14 @@ function displayOnHTML (events) {
                 $("#eventDetailTag").text(data.tag)
                 if (data.group) {
                     $("#eventDetailGroup").text(data.group)
+                    //hide share button for group events
+                    $("#shareEvent").hide()
                 } else if (data.shared) {
                     $("#eventDetailGroup").text("Shared to Me")
+                    $("#shareEvent").show()
                 } else {
                     $("#eventDetailGroup").text("My Events")
+                    $("#shareEvent").show()
                 }
             }
         })
@@ -280,6 +284,7 @@ function displayOnHTML (events) {
                 }, "json")
             })
         })
+
 
         // bond share
         $("#shareEventSubmit").click(function () {
