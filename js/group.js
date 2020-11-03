@@ -10,6 +10,7 @@ $(document).ready(function () {
                 // not reacting to these
                 // reload group list
                 $('#newGroupModal').modal('toggle');
+                $(".alert").hide()
                 getGroupList();
             } else {
                 //if fail, alert

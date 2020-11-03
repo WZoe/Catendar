@@ -180,6 +180,7 @@ function displayOnHTML (events) {
         let event = $(trigger.relatedTarget)
         let eventId = event.attr("id").slice(6)
 
+        $(".alert").hide()
         //ask for event detail
         //todo: csrf
         $.post("getEventDetail.php",{"id": eventId}, function (data) {
@@ -216,6 +217,7 @@ function displayOnHTML (events) {
             $("#eventDetailModal").modal("hide")
         })
         $("#editEventModal").on("show.bs.modal", function (trigger) {
+            $(".alert").hide()
             //ask for event detail
             //todo: csrf
             $.post("getEventDetail.php",{"id": eventId}, function (data) {

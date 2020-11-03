@@ -49,12 +49,15 @@ $(".minute").change(function () {
         this.value = 0
     }
 })
+// persnal add init
+$("#newevent").click($(".alert").hide)
 
 // group init
 $("#newgroupevent").click(function () {
     // $("#newGroupEventGroup").removeAttr("disabled")
     // $("#newGroupEventModal").find(".modal-title").text("Create New Event")
     // $("#submitGroupEvent").text("Create")
+    $(".alert").hide()
     $.get("getGroupList.php", function (data) {
         $("#newGroupEventGroup").html("")
         data.forEach(function (group) {

@@ -5,6 +5,8 @@ function userInit () {
     let additionalinfo = document.getElementById("additionalinfo");
     let eventbtn = document.getElementById("eventbtn");
     let guest = document.getElementById("guest");
+
+    $(".alert").hide()
     $.get("getUser.php", function (data) {
         if (!data.active) {
             userinfo.setAttribute("hidden", true);
