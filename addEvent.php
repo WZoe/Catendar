@@ -19,8 +19,8 @@ if ($title == "") {
     ));
 } else {
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
-    $stmt = $mysqli->prepare("insert into events (year, month,date,hour,minute,title,description,user_id,author_id,tag_id) values (?,?,?,?,?,?,?,?,?,?)");
-    $stmt->bind_param('iiiiissiii', $year, $month, $date,$hour,$minute,$title,$description,$_SESSION["id"],$_SESSION["id"],$tag);
+    $stmt = $mysqli->prepare("insert into events (original_id,year, month,date,hour,minute,title,description,user_id,author_id,tag_id) values (?,?,?,?,?,?,?,?,?,?)");
+    $stmt->bind_param('iiiiiissiii', $_SESSION['id'],$year, $month, $date,$hour,$minute,$title,$description,$_SESSION["id"],$_SESSION["id"],$tag);
     $stmt->execute();
     $stmt->close();
 
