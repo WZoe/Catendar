@@ -6,10 +6,10 @@ session_start();
 $event_id=(int)$_POST["id"];
 $members = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['members']) ? $_POST['members'] : "";
 
-if ($name == "" || $members == "") {
+if ($members == "") {
     echo json_encode(array(
         "success" => false,
-        "message" => "Invalid group name or no member is assigned"
+        "message" => "You need to specify members to share this event with"
     ));
 } else {
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
