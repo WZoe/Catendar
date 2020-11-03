@@ -185,7 +185,7 @@ function displayOnHTML (events) {
         $.post("getEventDetail.php",{"id": eventId}, function (data) {
             if (data.success) {
                 // update modal info
-                console.log(data)
+                // console.log(data)
                 // basic info
                 $("#eventDetailTitle").text(data.title)
                 $("#eventDetailDes").text(data.description)
@@ -206,6 +206,54 @@ function displayOnHTML (events) {
                 }
             }
         })
+
+        //bond edit
+        $("#editEvent").click(function () {
+            $("#eventDetailModal").modal("hide")
+        })
+        $("#editEventModal").on("show.bs.modal", function (trigger) {
+            //ask for event detail
+            //todo: csrf
+            $.post("getEventDetail.php",{"id": eventId}, function (data) {
+                if (data.success) {
+                    // update modal info
+                    // editable info
+                    $("#editEventName").val(data.title)
+                    $("#editEventDes").val(data.description)
+                    let hour = data.hour < 10? `0${data.hour}` : data.hour
+                    let minute = data.minute < 10? `0${data.minute}`:data.minute
+                    $("#editEventHour").val(hour)
+                    $("#editEventMinute").val(minute)
+                    $("#editEventYear").val(data.year)
+                    $("#editEventMonth").val(data.month)
+                    $("#editEventDate").val(data.date)
+                    $("#editEventTag").val(data.tag)
+
+                    // non-editable info
+                    if (data.group) {
+                        $("#editEventGroup").val(data.group)
+                    } else if (data.shared) {
+                        $("#editEventGroup").val("Shared to Me")
+                    } else {
+                        $("#editEventGroup").val("My Events")
+                    }
+                }
+            })
+
+            //todo: bond submit edit
+            $("#editEventSubmit").click(function () {
+                
+            })
+        })
+
+        // bond share
+        // $("#shareEvent").click(function () {
+        //     $("#eventDetailModal").modal("hide")
+        // })
+
+        // bond delete
+
+
     })
 }
 

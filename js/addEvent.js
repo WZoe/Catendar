@@ -52,6 +52,9 @@ $(".minute").change(function () {
 
 // group init
 $("#newgroupevent").click(function () {
+    // $("#newGroupEventGroup").removeAttr("disabled")
+    // $("#newGroupEventModal").find(".modal-title").text("Create New Event")
+    // $("#submitGroupEvent").text("Create")
     $.get("getGroupList.php", function (data) {
         $("#newGroupEventGroup").html("")
         data.forEach(function (group) {

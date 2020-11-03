@@ -196,7 +196,7 @@
     </div>
     <div class="modal fade" id="newGroupEventModal" tabindex="-1" role="dialog" aria-labelledby="Create New Group Event"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create New Group Event</h5>
@@ -259,7 +259,7 @@
     </div>
     <div class="modal fade" id="newEventModal" tabindex="-1" role="dialog" aria-labelledby="Create"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Create New Event</h5>
@@ -318,7 +318,7 @@
 <!--    event detail-->
     <div class="modal fade" id="eventDetailModal" tabindex="-1" role="dialog" aria-labelledby="eventDetail"
          aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Event Detail</h5>
@@ -348,12 +348,104 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="deleteEvent">Delete</button>
-                    <button type="button" class="btn btn-secondary" id="shareEvent">Share</button>
-                    <button type="button" class="btn btn-primary" id="editEvent">Edit</button>
+                    <button type="button" class="btn btn-secondary" id="shareEvent" data-toggle="modal" data-target="#shareEventModal">Share</button>
+                    <button type="button" class="btn btn-primary" id="editEvent" data-toggle="modal" data-target="#editEventModal">Edit</button>
                 </div>
             </div>
         </div>
     </div>
+<!--edit event-->
+    <div class="modal fade" id="editEventModal" tabindex="-1" role="dialog" aria-labelledby="Create New Group Event"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="editEventModalBody">
+                    <!--                form group is modified from https://getbootstrap.com/docs/4.0/components/forms/-->
+                    <div class="form-group">
+                        <label for="newGroupEventName">Event Title</label>
+                        <input class="form-control" type="text" id="editEventName" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 m-2">Date</label>
+                        <input type="number" min="1970" max="2100" class="form-control col-2 mr-2 year"
+                               id="editEventYear" value="2020" />
+                        <label class="m-2">/</label>
+                        <input type="number" min="1" max="12" value="1" class="form-control col-2 mr-2 month"
+                               id="editEventMonth" />
+                        <label class="m-2">/</label>
+                        <input type="number" min="1" max="31" value="1" class="form-control col-2 date"
+                               id="editEventDate" />
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 m-2">Time</label>
+                        <input type="number" min="0" max="23" class="form-control col-2 mr-2 hour"
+                               id="editEventHour" value="00" />
+                        <label class="m-2">:</label>
+                        <input type="number" min="0" max="59" value="00" class="form-control col-2 mr-2 minute"
+                               id="editEventMinute" />
+                    </div>
+                    <div class="form-group">
+                        <label>Tag</label>
+                        <select class="form-control" id="editEventTag">
+                            <option value="1">Default</option>
+                            <option value="2">Personal</option>
+                            <option value="3">Birthdays</option>
+                            <option value="4">Work</option>
+                            <option value="5">School</option>
+                            <option value="6">Holiday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Group</label>
+                        <select class="form-control"  id="editEventGroup" disabled>
+                            <option value="0" >My Events</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea class="form-control" rows="5" id="editEventDes"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="editEventSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    share event modal-->
+    <div class="modal fade" id="shareEventModal" tabindex="-1" role="dialog" aria-labelledby="Create New Group"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Share Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="shareEventModalBody">
+                    <!--                form group is modified from https://getbootstrap.com/docs/4.0/components/forms/-->
+                    <div class="form-group">
+                        <label >Share to</label>
+                        <input class="form-control" type="text" id="shareEventRecipients"
+                               placeholder="Alex Bob Cathy" />
+                        <small class="form-text text-muted">Please use whitespace to separate the
+                            additional usernames.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="shareEventSubmit">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p class="lead mx-auto footer">Zoe Wang & Eimee Yang, 2020/11</p>
     </footer>
