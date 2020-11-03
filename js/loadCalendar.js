@@ -270,7 +270,7 @@ function displayOnHTML (events) {
                         //if fail, alert
                         let msg = data.message
                         // this is cited from https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
-                        $("#newGroupEventModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
+                        $("#editEventModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
  ${msg}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -282,12 +282,56 @@ function displayOnHTML (events) {
         })
 
         // bond share
-        // $("#shareEvent").click(function () {
-        //     $("#eventDetailModal").modal("hide")
-        // })
+        $("#shareEventSubmit").click(function () {
+            let recipients = $("#shareEventRecipients").val()
+            $.post("shareEvent.php", { "id":eventId, "recipients": recipients}, function (data) {
+                if (data.success) {
+                    // not reacting to these
+                    // reload group list
+                    $('#shareEventModal').modal('toggle');
+                    //display success msg to father modal
+                    $("#editEventModalBody").append(`<div class="mt-1 alert alert-success alert-dismissible fade show" role="alert">
+    Shared event successfully sent!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>`)
+                } else {
+                    //if fail, alert
+                    let msg = data.message
+                    // this is cited from https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
+                    $("#shareEventModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
+    ${msg}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>`)
+                }
+            }, "json")
+        })
 
         // bond delete
-
+        $("#deleteEvent").click(function () {
+            // send delete request
+            $.post("deleteEvent.php", {"id":eventId}, function (data) {
+                if (data.success) {
+                    //close modal and update events
+                    $("#editEventModal").modal("hide")
+                    loadEvents();
+                    resetActiveInLeftBar();
+                } else {
+                    //if fail, alert
+                    let msg = data.message
+                    // this is cited from https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
+                    $("#shareEventModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
+    ${msg}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>`)
+                }
+            })
+        })
 
     })
 }
