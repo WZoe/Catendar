@@ -11,6 +11,7 @@ if (!isset($_SESSION['id'])) {
 } else {
     $event_id=(int)$_POST["id"];
 
+//    $event_id=46;
     //fetch event detail
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
     $stmt = $mysqli->prepare("select year, month,date,hour,minute,title,description,user_id,group_id, author_id,tag_id from events where id=?");
@@ -33,7 +34,7 @@ if (!isset($_SESSION['id'])) {
         while ($stmt->fetch()) {
             array_push($user_group_ids,$user_group_id);
         }
-        if (in_array($group_id, $user_group_ids)) {
+        if (!in_array($group_id, $user_group_ids)) {
             // no access
             echo json_encode(array(
                 "success" => false,
@@ -43,8 +44,35 @@ if (!isset($_SESSION['id'])) {
         }
     }
 
-    //get user name
+    //get author name
+    $stmt = $mysqli->prepare("select username from users where id=?");
+    $stmt->bind_param('i', $author_id);
+    $stmt->execute();
+    $stmt->bind_result($author);
+    $stmt->fetch();
+    $stmt->close();
     // get group name
+    if($group_id) {
+        $stmt = $mysqli->prepare("select name from groups where id=?");
+        $stmt->bind_param('i', $group_id);
+        $stmt->execute();
+        $stmt->bind_result($group);
+        $stmt->fetch();
+        $stmt->close();
+    } else {
+        $group = null;
+    }
+    //get tag name
+    $stmt = $mysqli->prepare("select name from tags where id=?");
+    $stmt->bind_param('i', $tag_id);
+    $stmt->execute();
+    $stmt->bind_result($tag);
+    $stmt->fetch();
+    $stmt->close();
+
+    //shared?
+    $shared = $user_id == $author_id? false:true;
+
     echo json_encode(array(
         "success" => true,
         "year" => $year,
@@ -52,12 +80,13 @@ if (!isset($_SESSION['id'])) {
         "date"=>$date,
         "hour"=>$hour,
         "minute"=>$minute,
-        "title"=>$title,
-        "description"=>$description,
+        "title"=>htmlentities($title),
+        "description"=>htmlentities($description),
         "user_id"=>$user_id,
-        "group_id"=>$group_id,
-        "author_id"=>$author_id,
-        "tag_id"=>$tag_id
+        "group"=>htmlentities($group),
+        "author"=>htmlentities($author),
+        "tag"=>htmlentities($tag),
+        "shared" => $shared
     ));
 
 }

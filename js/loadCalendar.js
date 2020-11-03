@@ -189,12 +189,21 @@ function displayOnHTML (events) {
                 // basic info
                 $("#eventDetailTitle").text(data.title)
                 $("#eventDetailDes").text(data.description)
-                $("#eventDetailTime").text(`${data.hour}:${data.minute}`)
+                let hour = data.hour < 10? `0${data.hour}` : data.hour
+                let minute = data.minute < 10? `0${data.minute}`:data.minute
+                $("#eventDetailTime").text(`${hour}:${minute}`)
                 $("#eventDetailYMD").text(`${data.year}/${data.month}/${data.date}`)
 
-                // check if its group or personal, shared or original
-
-                //display content
+                // additional info
+                $("#eventDetailAuthor").text(data.author)
+                $("#eventDetailTag").text(data.tag)
+                if (data.group) {
+                    $("#eventDetailGroup").text(data.group)
+                } else if (data.shared) {
+                    $("#eventDetailGroup").text("Shared to Me")
+                } else {
+                    $("#eventDetailGroup").text("My Events")
+                }
             }
         })
     })
