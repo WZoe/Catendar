@@ -188,7 +188,7 @@ function displayOnHTML (events) {
                 // console.log(data)
                 // basic info
                 $("#eventDetailTitle").text(data.title)
-                $("#eventDetailDes").text(data.description)
+                $("#eventDetailDes").html(data.description)
                 let hour = data.hour < 10? `0${data.hour}` : data.hour
                 let minute = data.minute < 10? `0${data.minute}`:data.minute
                 $("#eventDetailTime").text(`${hour}:${minute}`)
@@ -240,9 +240,44 @@ function displayOnHTML (events) {
                 }
             })
 
-            //todo: bond submit edit
+            //bond submit edit
             $("#editEventSubmit").click(function () {
-                
+                let title = $("#editEventName").val()
+                let year = $("#editEventYear").val()
+                let month = $("#editEventMonth").val()
+                let date = $("#editEventDate").val()
+                let hour = $("#editEventHour").val()
+                let minute = $("#editEventMinute").val()
+                let description = $("#editEventDes").val()
+                let tag = $("#editEventTag").find(":selected").val()
+
+                $.post("editEvent.php", {
+                    "id": eventId,
+                    "title": title,
+                    "year": year,
+                    "month": month,
+                    "date": date,
+                    "hour": hour,
+                    "minute": minute,
+                    "description": description,
+                    "tag": tag,
+                }, function (data) {
+                    if (data.success) {
+                        $('#editEventModal').modal('toggle');
+                        loadEvents();
+                        resetActiveInLeftBar();
+                    } else {
+                        //if fail, alert
+                        let msg = data.message
+                        // this is cited from https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
+                        $("#newGroupEventModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
+ ${msg}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>`)
+                    }
+                }, "json")
             })
         })
 

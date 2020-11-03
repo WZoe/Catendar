@@ -81,7 +81,7 @@ if (!isset($_SESSION['id'])) {
         "hour"=>$hour,
         "minute"=>$minute,
         "title"=>htmlentities($title),
-        "description"=>htmlentities($description),
+        "description"=>nl2br(htmlentities($description)),
         "user_id"=>$user_id,
         "group"=>htmlentities($group),
         "author"=>htmlentities($author),
