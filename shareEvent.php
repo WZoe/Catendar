@@ -73,7 +73,7 @@ foreach ($recipients as $username) {
     $stmt_findUser->close();
 }
 // user can't share to himself
-if(in_array($SESSION["id"], $ids)){
+if(in_array($_SESSION["id"], $ids)){
     echo json_encode(array(
         "success" => false,
         "message" => "You can't share to yourself."
