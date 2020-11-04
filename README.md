@@ -12,6 +12,9 @@ username:zoe  password:zoe
 
 username:eimee  password:eimee
 
+#### Note
+It takes a few seconds to load events after every operation. Sorry for the wait.
+
 ## Creative portion
 - User can tag an event with particular category and look up events by tags.
 
