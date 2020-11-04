@@ -2,7 +2,16 @@
 header("Content-Type: application/json");
 ini_set("session.cookie_httponly", 1);
 session_start();
+$token=$_POST['token'];
 
+// check token
+if ($token != $_SESSION['token']) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Unauthorized request"
+    ));
+    exit();
+}
 if (!isset($_SESSION['id'])) {
     echo json_encode(array(
         "success"=>false,

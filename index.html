@@ -27,7 +27,6 @@
                 </div>
 
                 <!--                js should process user info, login/signup here-->
-                <!--                todo: judge session status, display different content(if not logged in, only see sign up/login, no tags not groups and no events.)）-->
                 <div id="userinfo" class="row m-2">
                     <h4>Welcome back, username!</h4>
                     <button class="btn btn-secondary btn-block" id="logout">Log Out</button>
@@ -43,12 +42,9 @@
                                 placeholder="Password" />
                         </div>
                     </form>
-                    <!--                todo: sign up -->
                     <button class="btn btn-primary btn-block" id="signup">Sign Up</button>
-                    <!--                todo: login -->
                     <button class="btn btn-secondary btn-block" id="login">Log In</button>
                 </div>
-                <!--                    todo: hidden when not logged in-->
                 <div id="additionalinfo">
                     <div class="row pt-3">
                         <div class="col-1 mt-1"><i class="fas fa-tags fa-lg"></i></div>
@@ -57,7 +53,6 @@
                     <div class="row m-2">
                         <!--                list-group is modified from https://getbootstrap.com/docs/4.0/components/list-group/-->
                         <div class="col-12 list-group" id="taglist">
-                            <!--                    todo: on clicking different tags, reload events-->
                             <a href="#" class="list-group-item list-group-item-action active" data-toggle="list" id=1>
                                 All Events
                             </a>
@@ -76,15 +71,12 @@
                     <div class="row pt-3" id="groups">
                         <div class="col-1 mt-1"><i class="fas fa-users fa-lg"></i></div>
                         <h4 class="col-8">Groups</h4>
-                        <!--                todo: add group and reload group data-->
                         <button class="col-2 btn btn-primary" data-toggle="modal" data-target="#newGroupModal"><i
                                 class="fas fa-plus"></i></button>
                     </div>
                     <div class="row m-2">
                         <!--                list-group is modified from https://getbootstrap.com/docs/4.0/components/list-group/-->
                         <div class="col-12 list-group" id="grouplist">
-                            <!--                    todo: load all groups on page load-->
-                            <!--                    todo: on click show group events-->
                             <a href="#" class="list-group-item list-group-item-action active">
                                 All Events
                             </a>
@@ -99,20 +91,16 @@
             <!--        right col-->
             <div class="col mr-1">
                 <div class="row mt-3">
-                    <!--                todo: prev month, update events and current month-->
                     <button class="col-1 btn btn-secondary" id="prev"><i class="fas fa-chevron-left fa-2x"></i></button>
                     <div class="col-1"></div>
-                    <!--                todo: next month, update events and current month-->
                     <button class="col-1 btn btn-secondary" id="next"><i
                             class="fas fa-chevron-right fa-2x"></i></button>
                     <h2 class="col-6 text-center" id="current">2020/11</h2>
                     <!--                btn-group is modified from https://getbootstrap.com/docs/4.0/components/button-group/-->
                     <div class="btn-group col-3" role="group" id="eventbtn">
-                        <!--                    todo: group add-->
                         <button class="btn btn-secondary" data-toggle="modal" data-target="#newGroupEventModal"
                             id="newgroupevent"><i class="fas fa-users fa-lg"></i><i
                                 class="fas fa-plus fa-lg"></i></button>
-                        <!--                    todo: personal add-->
                         <button class="btn btn-primary" data-toggle="modal" data-target="#newEventModal"
                             id="newevent"><i class="fas fa-plus fa-2x"></i></button>
                     </div>
@@ -132,11 +120,6 @@
                             </tr>
                         </thead>
                         <tbody id="calendar-weeks">
-                            <!--                    todo: load 日期, load events-->
-                            <!--todo: event detail-->
-                            <!--todo: edit event-->
-                            <!--todo: delete event-->
-                            <!--todo: share event-->
                             <tr id="week1">
                                 <th class="cell">
 <!--                                    &lt;!&ndash;                            example event record&ndash;&gt;-->

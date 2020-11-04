@@ -5,7 +5,8 @@ $(document).ready(function () {
         let groupName = $("#groupname").val()
         let members = $("#members").val()
 
-        $.post("newGroup.php", { "name": groupName, "members": members }, function (data) {
+        $.post("newGroup.php", { "name": groupName, "members": members,
+            "token": document.cookie.slice(6) }, function (data) {
             if (data.success) {
                 // not reacting to these
                 // reload group list

@@ -5,7 +5,16 @@ session_start();
 
 $name = preg_match('/[A-Za-z0-9_\s*#<>?!.,"\']+$/', $_POST['name']) ? $_POST['name'] : "";
 $members = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['members']) ? $_POST['members'] : "";
+$token=$_POST['token'];
 
+// check token & status
+if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Unauthorized request"
+    ));
+    exit();
+}
 if ($name == "" || $members == "") {
     echo json_encode(array(
         "success" => false,

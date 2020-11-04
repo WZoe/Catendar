@@ -7,6 +7,7 @@ $("#login").click(function () {
         //send login msg
         //if success
         if (data.success) {
+            document.cookie="token="+data.token
             userInit()
         } else {
             //if fail, alert
@@ -30,6 +31,7 @@ $("#signup").click(function () {
         //send register msg
         //if sucess
         if (data.success) {
+            document.cookie="token="+data.token
             userInit()
         } else {
             //if fail, alert
@@ -49,6 +51,7 @@ $("#signup").click(function () {
 $("#logout").click(function () {
     //send log out request
     $.get("logOut.php", function () {
+        document.cookie="token="
         userInit()
     })
 })

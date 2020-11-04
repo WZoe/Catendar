@@ -23,7 +23,16 @@ $group = (int)$_POST['group'];
 //$description="asda";
 //$tag=2;
 //$group=1;
+$token=$_POST['token'];
 
+// check token & status
+if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Unauthorized request"
+    ));
+    exit();
+}
 if ($title == "") {
     echo json_encode(array(
         "success" => false,

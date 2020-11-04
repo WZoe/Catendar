@@ -51,7 +51,8 @@ if ($password == "" || $username == "") {
         $stmt->close();
         echo json_encode(array(
            "success" => true,
-            "username" => $_SESSION['username']
+            "username" => $_SESSION['username'],
+            "token" => $_SESSION["token"]
         ));
     }
 

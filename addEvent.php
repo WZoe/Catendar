@@ -11,6 +11,16 @@ $hour = (int)$_POST['hour'];
 $minute = (int)$_POST['minute'];
 $description = preg_match('/[^<>:]+$/', $_POST['description']) ? $_POST['description'] : "";
 $tag = (int)$_POST['tag'];
+$token=$_POST['token'];
+
+// check token & status
+if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Unauthorized request"
+    ));
+    exit();
+}
 
 if ($title == "") {
     echo json_encode(array(
@@ -28,6 +38,3 @@ if ($title == "") {
         "success" => true,
     ));
 }
-
-// todo:add group add events edit events share events CSRF
-//todo:make sure user is logged in

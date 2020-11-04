@@ -189,8 +189,8 @@ function displayOnHTML (events) {
 
         $(".alert").hide()
         //ask for event detail
-        //todo: csrf
-        $.post("getEventDetail.php",{"id": eventId}, function (data) {
+        $.post("getEventDetail.php",{"id": eventId,
+            "token": document.cookie.slice(6)}, function (data) {
             if (data.success) {
                 // update modal info
                 // console.log(data)
@@ -231,7 +231,8 @@ function displayOnHTML (events) {
             $(".alert").hide()
             //ask for event detail
             //todo: csrf
-            $.post("getEventDetail.php",{"id": eventId}, function (data) {
+            $.post("getEventDetail.php",{"id": eventId,
+                "token": document.cookie.slice(6)}, function (data) {
                 if (data.success) {
                     // update modal info
                     // editable info
@@ -277,7 +278,8 @@ function displayOnHTML (events) {
                     "hour": hour,
                     "minute": minute,
                     "description": description,
-                    "tag": tag
+                    "tag": tag,
+                    "token": document.cookie.slice(6)
                 }, function (data) {
                     if (data.success) {
                         $('#editEventModal').modal('toggle');
@@ -311,7 +313,8 @@ function displayOnHTML (events) {
 
             $("#shareEventSubmit"+eventId).click(function () {
                 let recipients = $("#shareEventRecipients").val()
-                $.post("shareEvent.php", { "id":eventId, "recipients": recipients}, function (data) {
+                $.post("shareEvent.php", { "id":eventId, "recipients": recipients,
+                    "token": document.cookie.slice(6)}, function (data) {
                     if (data.success) {
                         // not reacting to these
                         // reload group list
@@ -342,7 +345,8 @@ function displayOnHTML (events) {
         // bond delete
         $("#deleteEvent"+eventId).click(function () {
             // send delete request
-            $.post("deleteEvent.php", {"id":eventId}, function (data) {
+            $.post("deleteEvent.php", {"id":eventId,
+                "token": document.cookie.slice(6)}, function (data) {
                 if (data.success) {
                     //close modal and update events
                     $("#eventDetailModal").modal("hide")

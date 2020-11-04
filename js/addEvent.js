@@ -87,7 +87,8 @@ $("#submitEvent").click(function () {
         "hour": hour,
         "minute": minute,
         "description": description,
-        "tag": tag
+        "tag": tag,
+        "token": document.cookie.slice(6)
     }, function (data) {
         if (data.success) {
             $('#newEventModal').modal('toggle');
@@ -136,7 +137,8 @@ $("#submitGroupEvent").click(function () {
         "minute": minute,
         "description": description,
         "tag": tag,
-        "group": group
+        "group": group,
+        "token": document.cookie.slice(6)
     }, function (data) {
         if (data.success) {
             $('#newGroupEventModal').modal('toggle');
