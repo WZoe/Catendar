@@ -47,7 +47,7 @@ if (!isset($_SESSION['id'])) {
             // no access
             echo json_encode(array(
                 "success" => false,
-                "message" => "You have not allowed to delete this event."
+                "message" => "You are not allowed to delete this event."
             ));
             exit();
         }
