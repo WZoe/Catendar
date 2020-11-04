@@ -1,3 +1,10 @@
+function getToken() {
+    //modified from https://www.w3schools.com/js/js_cookies.asp
+    decodedCookie = decodeURIComponent(document.cookie);
+    let tokenString = decodedCookie.split(';')[0]
+    return tokenString.substring(6)
+}
+
 // jQuery.post() is modified from  https://api.jquery.com/jQuery.post/#jQuery-post-url-data-success-dataType
 //login
 $("#login").click(function () {

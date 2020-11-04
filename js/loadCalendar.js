@@ -190,7 +190,7 @@ function displayOnHTML (events) {
         $(".alert").hide()
         //ask for event detail
         $.post("getEventDetail.php",{"id": eventId,
-            "token": document.cookie.slice(6)}, function (data) {
+            "token": getToken()}, function (data) {
             if (data.success) {
                 // update modal info
                 // console.log(data)
@@ -232,7 +232,7 @@ function displayOnHTML (events) {
             //ask for event detail
             //todo: csrf
             $.post("getEventDetail.php",{"id": eventId,
-                "token": document.cookie.slice(6)}, function (data) {
+                "token": getToken()}, function (data) {
                 if (data.success) {
                     // update modal info
                     // editable info
@@ -245,15 +245,15 @@ function displayOnHTML (events) {
                     $("#editEventYear").val(data.year)
                     $("#editEventMonth").val(data.month)
                     $("#editEventDate").val(data.date)
-                    $("#editEventTag").val(data.tag)
+                    $("#editEventTag").html(`<option selected>${data.tag}</option>`)
 
                     // non-editable info
                     if (data.group) {
-                        $("#editEventGroup").val(data.group)
+                        $("#editEventGroup").html(`<option selected>${data.group}</option>`)
                     } else if (data.shared) {
-                        $("#editEventGroup").val("Shared to Me")
+                        $("#editEventGroup").html(`<option selected>Shared to Me</option>`)
                     } else {
-                        $("#editEventGroup").val("My Events")
+                        $("#editEventGroup").html(`<option selected>My Events</option>`)
                     }
                 }
             })
@@ -279,7 +279,7 @@ function displayOnHTML (events) {
                     "minute": minute,
                     "description": description,
                     "tag": tag,
-                    "token": document.cookie.slice(6)
+                    "token": getToken()
                 }, function (data) {
                     if (data.success) {
                         $('#editEventModal').modal('toggle');
@@ -314,7 +314,7 @@ function displayOnHTML (events) {
             $("#shareEventSubmit"+eventId).click(function () {
                 let recipients = $("#shareEventRecipients").val()
                 $.post("shareEvent.php", { "id":eventId, "recipients": recipients,
-                    "token": document.cookie.slice(6)}, function (data) {
+                    "token": getToken()}, function (data) {
                     if (data.success) {
                         // not reacting to these
                         // reload group list
@@ -346,7 +346,7 @@ function displayOnHTML (events) {
         $("#deleteEvent"+eventId).click(function () {
             // send delete request
             $.post("deleteEvent.php", {"id":eventId,
-                "token": document.cookie.slice(6)}, function (data) {
+                "token": getToken()}, function (data) {
                 if (data.success) {
                     //close modal and update events
                     $("#eventDetailModal").modal("hide")
