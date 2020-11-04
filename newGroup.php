@@ -5,7 +5,7 @@ session_start();
 
 $name = preg_match('/[A-Za-z0-9_\s*#<>?!.,"\']+$/', $_POST['name']) ? $_POST['name'] : "";
 $members = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['members']) ? $_POST['members'] : "";
-$token=$_POST['token'];
+$token = $_POST['token'];
 
 // check token & status
 if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {
@@ -39,7 +39,7 @@ if ($name == "" || $members == "") {
             // cannot find user
             echo json_encode(array(
                 "success" => false,
-                "message" => "Cannot find user " . $username
+                "message" => "Cannot find user " . htmlentities($username)
             ));
             exit;
         } else {
@@ -67,11 +67,9 @@ if ($name == "" || $members == "") {
 
     echo json_encode(array(
         "success" => true,
-        "members" => $ids
     ));
 
 }
-
 
 
 // success or not: user doesn't exist

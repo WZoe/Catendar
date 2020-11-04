@@ -17,7 +17,7 @@ $(document).ready(function () {
 });
 
 // update global variable: currentMonth
-function getCurrentMonth () {
+function getCurrentMonth() {
     let currentD = new Date();
     let currentY = currentD.getFullYear();
     let currentM = currentD.getMonth();
@@ -25,7 +25,7 @@ function getCurrentMonth () {
 }
 
 // update calendar with previous month
-function getPreviousMonth () {
+function getPreviousMonth() {
     currentMonth = currentMonth.prevMonth();
     updateCalendar();
     loadEvents();
@@ -33,7 +33,7 @@ function getPreviousMonth () {
 }
 
 // update calendar with next month
-function getNextMonth () {
+function getNextMonth() {
     currentMonth = currentMonth.nextMonth();
     updateCalendar();
     loadEvents();
@@ -41,12 +41,12 @@ function getNextMonth () {
 }
 
 // clear calendar grids
-function clearCalendar () {
+function clearCalendar() {
     $("#calendar-weeks").empty();
 }
 
 // load calendar grids for a new month
-function updateCalendar () {
+function updateCalendar() {
     // empty previous calendar
     clearCalendar();
 
@@ -60,11 +60,11 @@ function updateCalendar () {
     hightlightCurrentDate();
 }
 
-function updateTitle () {
+function updateTitle() {
     $("h2[id='current']").html(currentMonth.year + "/" + (currentMonth.month + 1));
 }
 
-function hightlightCurrentDate () {
+function hightlightCurrentDate() {
     let currentD = new Date();
     let year = currentD.getFullYear();
     let month = currentD.getMonth() + 1;
@@ -75,7 +75,7 @@ function hightlightCurrentDate () {
 }
 
 // clear all events shown on current month calendar grids
-function clearEvents () {
+function clearEvents() {
     for (let dayId in daysInCurrentMonth) {
         let day = daysInCurrentMonth[dayId];
         let month = day.getMonth() + 1;
@@ -88,22 +88,20 @@ function clearEvents () {
     //$("#day-" + month + "-" + date).empty();
 }
 
-function createTimeDataForAjax () {
+function createTimeDataForAjax() {
     // query current month + prev & next several days group by day
     let data = {};
     data["currentYear"] = currentMonth.year;
     data["currentMonth"] = currentMonth.month + 1;
     if (daysInCurrentMonth[0].getMonth() == currentMonth.month) {
         data["prevMonth"] = -1;
-    }
-    else {
+    } else {
         data["prevMonth"] = currentMonth.prevMonth().month + 1;
         data["prevMonthStartDate"] = daysInCurrentMonth[0].getDate();
     }
     if (daysInCurrentMonth[daysInCurrentMonth.length - 1].getMonth() == currentMonth.month) {
         data["nextMonth"] = -1;
-    }
-    else {
+    } else {
         data["nextMonth"] = currentMonth.nextMonth().month + 1;
         data["nextMonthEndDate"] = daysInCurrentMonth[daysInCurrentMonth.length - 1].getDate();
     }
@@ -112,7 +110,7 @@ function createTimeDataForAjax () {
 }
 
 // load all events shown on current month calendar grids
-function loadEvents () {
+function loadEvents() {
     clearEvents();
 
     // create time data
@@ -124,7 +122,7 @@ function loadEvents () {
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
-        headers: { 'content-type': 'application/json' }
+        headers: {'content-type': 'application/json'}
     })
         .then(response => response.json())
         .then(data => data.success ? displayOnHTML(data) : console.log(data.message))
@@ -133,7 +131,7 @@ function loadEvents () {
 
 
 // display returned daily events on HTML and bond detail modals
-function displayOnHTML (events) {
+function displayOnHTML(events) {
     // console.log(events);
     // load personal events
     if (events.personal_events.length != 0) {
@@ -211,7 +209,7 @@ function displayOnHTML (events) {
                 if (data.group) {
                     $("#eventDetailGroup").text(data.group)
                     //hide share button for group events
-                    $("#shareEvent").hide()
+                    $("#shareEvent"+eventId).hide()
                 } else if (data.shared) {
                     $("#eventDetailGroup").text("Shared to Me")
                     $("#shareEvent").show()
@@ -250,7 +248,7 @@ function displayOnHTML (events) {
                     $("#editEventYear").val(data.year)
                     $("#editEventMonth").val(data.month)
                     $("#editEventDate").val(data.date)
-                    $("#editEventTag").html(`<option selected>${data.tag}</option>`)
+                    $("#editEventTag").find("#edit"+data.tag).attr("selected", true)
 
                     // non-editable info
                     if (data.group) {
@@ -365,7 +363,7 @@ function displayOnHTML (events) {
                     //if fail, alert
                     let msg = data.message
                     // this is cited from https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
-                    $("#shareEventModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
+                    $("#eventDetailModalBody").append(`<div class="mt-1 alert alert-danger alert-dismissible fade show" role="alert">
     ${msg}
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -378,7 +376,7 @@ function displayOnHTML (events) {
     })
 }
 
-function createPersonalEvent (event) {
+function createPersonalEvent(event) {
     let eventElement = document.createElement("div");
     eventElement.innerHTML = event.title;
     eventElement.setAttribute("class", "event user_event");
@@ -388,7 +386,7 @@ function createPersonalEvent (event) {
     return eventElement;
 }
 
-function createSharedEvent (event) {
+function createSharedEvent(event) {
     let eventElement = document.createElement("div");
     eventElement.innerHTML = event.title;
     eventElement.setAttribute("class", "event shared_event");
@@ -398,7 +396,7 @@ function createSharedEvent (event) {
     return eventElement;
 }
 
-function createGroupEvent (event) {
+function createGroupEvent(event) {
     let eventElement = document.createElement("div");
     eventElement.innerHTML = event.title;
     eventElement.setAttribute("class", "event group_event");
@@ -408,7 +406,7 @@ function createGroupEvent (event) {
     return eventElement;
 }
 
-function fillNewMonth () {
+function fillNewMonth() {
     // clear daysInCurrentMonth array
     daysInCurrentMonth = [];
 

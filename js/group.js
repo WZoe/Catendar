@@ -30,7 +30,7 @@ $(document).ready(function () {
     });
 });
 
-function getGroupList () {
+function getGroupList() {
     $.get("getGroupList.php", function (data) {
         // display groups
         $("#grouplist").html("<a href=\"#\" class=\"list-group-item list-group-item-action active\" data-toggle=\"list\" id='groupAllEvents'>\nAll Events\n</a>\n" +
@@ -46,7 +46,7 @@ function getGroupList () {
     }, "json")
 }
 
-function loadEventsOnClick () {
+function loadEventsOnClick() {
     $("#grouplist").children("a").each(function (idx) {
         $(this).click(function (event) {
             // reset active tag to default (can't select both group and tag at the same time)
@@ -74,7 +74,7 @@ function loadEventsOnClick () {
     });
 }
 
-function loadPersonalEvents () {
+function loadPersonalEvents() {
     // clear old events
     clearEvents();
     // load new events
@@ -84,14 +84,14 @@ function loadPersonalEvents () {
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
-        headers: { 'content-type': 'application/json' }
+        headers: {'content-type': 'application/json'}
     })
         .then(response => response.json())
         .then(data => data.success ? displayOnHTML(data) : console.log(data.message))
         .catch(err => console.error(err));
 }
 
-function loadSharedEvents () {
+function loadSharedEvents() {
     // clear old events
     clearEvents();
     // load new events
@@ -101,14 +101,14 @@ function loadSharedEvents () {
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
-        headers: { 'content-type': 'application/json' }
+        headers: {'content-type': 'application/json'}
     })
         .then(response => response.json())
         .then(data => data.success ? displayOnHTML(data) : console.log(data.message))
         .catch(err => console.error(err));
 }
 
-function loadGroupEvents (groupId) {
+function loadGroupEvents(groupId) {
     // clear old events
     clearEvents();
     // load new events
@@ -119,7 +119,7 @@ function loadGroupEvents (groupId) {
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
-        headers: { 'content-type': 'application/json' }
+        headers: {'content-type': 'application/json'}
     })
         .then(response => response.json())
         .then(data => data.success ? displayOnHTML(data) : console.log(data.message))

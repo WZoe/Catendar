@@ -8,14 +8,13 @@ $("#taglist").children("a").each(function (idx) {
         let tagId = event.target.id;
         if (tagId == 1) {
             loadEvents();
-        }
-        else {
+        } else {
             loadTagEvents(tagId);
         }
     })
 })
 
-function loadTagEvents (tagId) {
+function loadTagEvents(tagId) {
     // clear old events
     clearEvents();
     // load new events
@@ -26,7 +25,7 @@ function loadTagEvents (tagId) {
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
-        headers: { 'content-type': 'application/json' }
+        headers: {'content-type': 'application/json'}
     })
         .then(response => response.json())
         .then(data => data.success ? displayOnHTML(data) : console.log(data.message))

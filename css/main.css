@@ -13,6 +13,7 @@ footer {
     background-color: lightseagreen;
     color: lightseagreen;
 }
+
 .color-secondary {
     background-color: lightsalmon;
     color: lightsalmon;
@@ -34,15 +35,16 @@ footer {
 }
 
 .event {
-overflow: hidden;
+    overflow: hidden;
     height: 1.5em;
 }
+
 p {
     margin: 0;
 }
 
 .tag {
-    width:15px;
+    width: 15px;
     height: 15px;
     border-radius: 100%;
     float: left;
@@ -58,6 +60,7 @@ p {
     background-color: palevioletred;
     color: white;
 }
+
 .user_event {
     background-color: gold;
 

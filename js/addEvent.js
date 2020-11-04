@@ -166,19 +166,19 @@ $("#submitGroupEvent").click(function () {
     }, "json")
 })
 
-function resetActiveInLeftBar () {
+function resetActiveInLeftBar() {
     resetActiveGroup();
     resetActiveTag();
 }
 
-function resetActiveTag () {
+function resetActiveTag() {
     // cancel old selected item
     $("#taglist > a.active").removeClass("active");
     // select default item
     $("#taglist > a#1").addClass("active");
 }
 
-function resetActiveGroup () {
+function resetActiveGroup() {
     // cancel old selected item
     $("#grouplist > a.active").removeClass("active");
     // select default item

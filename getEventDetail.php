@@ -3,7 +3,7 @@ header("Content-Type: application/json");
 ini_set("session.cookie_httponly", 1);
 session_start();
 
-$token=$_POST['token'];
+$token = $_POST['token'];
 
 // check token & status
 if ($token != $_SESSION['token']) {
@@ -16,11 +16,11 @@ if ($token != $_SESSION['token']) {
 
 if (!isset($_SESSION['id'])) {
     echo json_encode(array(
-        "success"=>false,
-        "message"=>"user is not logged in"
+        "success" => false,
+        "message" => "user is not logged in"
     ));
 } else {
-    $event_id=(int)$_POST["id"];
+    $event_id = (int)$_POST["id"];
 
 //    $event_id=46;
     //fetch event detail
@@ -43,7 +43,7 @@ if (!isset($_SESSION['id'])) {
         $stmt->bind_result($user_group_id);
         $user_group_ids = array();
         while ($stmt->fetch()) {
-            array_push($user_group_ids,$user_group_id);
+            array_push($user_group_ids, $user_group_id);
         }
         if (!in_array($group_id, $user_group_ids)) {
             // no access
@@ -63,7 +63,7 @@ if (!isset($_SESSION['id'])) {
     $stmt->fetch();
     $stmt->close();
     // get group name
-    if($group_id) {
+    if ($group_id) {
         $stmt = $mysqli->prepare("select name from groups where id=?");
         $stmt->bind_param('i', $group_id);
         $stmt->execute();
@@ -82,21 +82,21 @@ if (!isset($_SESSION['id'])) {
     $stmt->close();
 
     //shared?
-    $shared = $user_id == $author_id? false:true;
+    $shared = $user_id == $author_id ? false : true;
 
     echo json_encode(array(
         "success" => true,
         "year" => $year,
-        "month" =>$month,
-        "date"=>$date,
-        "hour"=>$hour,
-        "minute"=>$minute,
-        "title"=>htmlentities($title),
-        "description"=>nl2br(htmlentities($description)),
-        "user_id"=>$user_id,
-        "group"=>htmlentities($group),
-        "author"=>htmlentities($author),
-        "tag"=>htmlentities($tag),
+        "month" => $month,
+        "date" => $date,
+        "hour" => $hour,
+        "minute" => $minute,
+        "title" => htmlentities($title),
+        "description" => nl2br(htmlentities($description)),
+        "user_id" => $user_id,
+        "group" => htmlentities($group),
+        "author" => htmlentities($author),
+        "tag" => htmlentities($tag),
         "shared" => $shared
     ));
 

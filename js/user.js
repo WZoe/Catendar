@@ -10,11 +10,11 @@ function getToken() {
 $("#login").click(function () {
     let username = $("#username").val()
     let password = $("#password").val()
-    $.post("logIn.php", { 'username': username, 'password': password }, function (data) {
+    $.post("logIn.php", {'username': username, 'password': password}, function (data) {
         //send login msg
         //if success
         if (data.success) {
-            document.cookie="token="+data.token
+            document.cookie = "token=" + data.token
             userInit()
         } else {
             //if fail, alert
@@ -34,11 +34,11 @@ $("#login").click(function () {
 $("#signup").click(function () {
     let username = $("#username").val()
     let password = $("#password").val()
-    $.post("signUp.php", { 'username': username, 'password': password }, function (data) {
+    $.post("signUp.php", {'username': username, 'password': password}, function (data) {
         //send register msg
         //if sucess
         if (data.success) {
-            document.cookie="token="+data.token
+            document.cookie = "token=" + data.token
             userInit()
         } else {
             //if fail, alert
@@ -58,7 +58,7 @@ $("#signup").click(function () {
 $("#logout").click(function () {
     //send log out request
     $.get("logOut.php", function () {
-        document.cookie="token="
+        document.cookie = "token="
         userInit()
     })
 })

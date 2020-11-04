@@ -2,7 +2,7 @@
 header("Content-Type: application/json");
 ini_set("session.cookie_httponly", 1);
 session_start();
-$token=$_POST['token'];
+$token = $_POST['token'];
 
 // check token
 if ($token != $_SESSION['token']) {
@@ -14,11 +14,11 @@ if ($token != $_SESSION['token']) {
 }
 if (!isset($_SESSION['id'])) {
     echo json_encode(array(
-        "success"=>false,
-        "message"=>"user is not logged in"
+        "success" => false,
+        "message" => "user is not logged in"
     ));
 } else {
-    $event_id=(int)$_POST["id"];
+    $event_id = (int)$_POST["id"];
 
 //    $event_id=72;
     //fetch event detail
@@ -41,7 +41,7 @@ if (!isset($_SESSION['id'])) {
         $stmt->bind_result($user_group_id);
         $user_group_ids = array();
         while ($stmt->fetch()) {
-            array_push($user_group_ids,$user_group_id);
+            array_push($user_group_ids, $user_group_id);
         }
         if (!in_array($group_id, $user_group_ids)) {
             // no access
@@ -55,7 +55,7 @@ if (!isset($_SESSION['id'])) {
 
     //delete this event and all all copies
     $stmt = $mysqli->prepare("delete from events where id=? or original_id=?");
-    $stmt->bind_param('ii', $event_id,$event_id);
+    $stmt->bind_param('ii', $event_id, $event_id);
     $stmt->execute();
     $stmt->fetch();
     $stmt->close();

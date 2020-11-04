@@ -39,7 +39,7 @@ if ($password == "" || $username == "") {
         }
         echo json_encode(array(
             "success" => true,
-            "username" => $_SESSION['username'],
+            "username" => htmlentities($_SESSION['username']),
             "token" => $_SESSION['token']
         ));
 

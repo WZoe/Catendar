@@ -8,7 +8,7 @@ $year = (int)$_POST['year'];
 $month = (int)$_POST['month'];
 $date = (int)$_POST['date'];
 $hour = (int)$_POST['hour'];
-$minute =(int)$_POST['minute'];
+$minute = (int)$_POST['minute'];
 $description = preg_match('/[^<>:]+$/', $_POST['description']) ? $_POST['description'] : "";
 $tag = (int)$_POST['tag'];
 $group = (int)$_POST['group'];
@@ -22,7 +22,7 @@ $group = (int)$_POST['group'];
 //$description="asda";
 //$tag=2;
 //$group=1;
-$token=$_POST['token'];
+$token = $_POST['token'];
 
 // check token & status
 if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {

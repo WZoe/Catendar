@@ -22,8 +22,8 @@ if ($stmt) {
 
         // append to result array
         array_push($result, array(
-           "group_id" => $group_id,
-           "group_name" => htmlentities($name)
+            "group_id" => $group_id,
+            "group_name" => htmlentities($name)
         ));
     }
     $stmt->close();

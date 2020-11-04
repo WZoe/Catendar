@@ -1,6 +1,6 @@
 $(document).ready(userInit());
 
-function userInit () {
+function userInit() {
     let userinfo = document.getElementById("userinfo");
     let additionalinfo = document.getElementById("additionalinfo");
     let eventbtn = document.getElementById("eventbtn");
