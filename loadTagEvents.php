@@ -1,5 +1,17 @@
 <?php
+    header("Content-Type: application/json");
+    ini_set("session.cookie_httponly", 1);
     session_start();
+
+    // csrf check
+    $token=$_POST['token'];
+    if ($token != $_SESSION['token']) {
+        echo json_encode(array(
+            "success" => false,
+            "message" => "Unauthorized request"
+        ));
+        exit();
+    }
     // make sure user is logged in
     if (!isset($_SESSION['id'])) {
         echo json_encode(array(
@@ -7,21 +19,19 @@
             "message"=>"user is not logged in"
         ));
     } else {
-        // retrieve json data from ajax
-        header("Content-Type: application/json");
         // retrieve data posted via fetch()
         $json_str = file_get_contents('php://input');
         $json_obj = json_decode($json_str, true);
-        $tag_id = $json_obj['tag_id'];
-        $currentYear = $json_obj['currentYear'];
-        $currentMonth = $json_obj['currentMonth'];
-        $prevMonth = $json_obj['prevMonth'];
-        $nextMonth = $json_obj['nextMonth'];
+        $tag_id = (int)$json_obj['tag_id'];
+        $currentYear = (int)$json_obj['currentYear'];
+        $currentMonth = (int)$json_obj['currentMonth'];
+        $prevMonth = (int)$json_obj['prevMonth'];
+        $nextMonth = (int)$json_obj['nextMonth'];
         if($prevMonth != -1){
-            $prevMonthStartDate = $json_obj['prevMonthStartDate'];
+            $prevMonthStartDate = (int)$json_obj['prevMonthStartDate'];
         }
         if($nextMonth != -1){
-            $nextMonthEndDate = $json_obj['nextMonthEndDate'];
+            $nextMonthEndDate = (int)$json_obj['nextMonthEndDate'];
         }
 
         $personal_events = array();
@@ -55,9 +65,9 @@
                 "date"=>$date,
                 "hour"=>$hour,
                 "minute"=>$minute,
-                "title"=>$title,
-                "description"=>$description,
-                "author_name"=>$author_name
+                "title"=>htmlentities($title),
+                "description"=>nl2br(htmlentities($description)),
+                "author_name"=>htmlentities($author_name)
             ));
         }
         $stmt_personal->close();
@@ -87,9 +97,9 @@
                 "date"=>$date,
                 "hour"=>$hour,
                 "minute"=>$minute,
-                "title"=>$title,
-                "description"=>$description,
-                "author_name"=>$author_name
+                "title"=>htmlentities($title),
+                "description"=>nl2br(htmlentities($description)),
+                "author_name"=>htmlentities($author_name)
             ));
         }
         $stmt_shared->close();
@@ -138,10 +148,10 @@
                     "date"=>$date,
                     "hour"=>$hour,
                     "minute"=>$minute,
-                    "title"=>$title,
-                    "description"=>$description,
-                    "author_name"=>$author_name,
-                    "group_name"=>$group_name
+                    "title"=>htmlentities($title),
+                    "description"=>nl2br(htmlentities($description)),
+                    "author_name"=>htmlentities($author_name),
+                    "group_name"=>htmlentities($group_name)
                 ));
             }
             $stmt_group2->close();

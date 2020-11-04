@@ -5,8 +5,10 @@ $(document).ready(function () {
         let groupName = $("#groupname").val()
         let members = $("#members").val()
 
-        $.post("newGroup.php", { "name": groupName, "members": members,
-            "token": getToken() }, function (data) {
+        $.post("newGroup.php", {
+            "name": groupName, "members": members,
+            "token": getToken()
+        }, function (data) {
             if (data.success) {
                 // not reacting to these
                 // reload group list
@@ -78,6 +80,7 @@ function loadPersonalEvents () {
     // load new events
     const phpFile = "loadPersonalEvents.php";
     let data = createTimeDataForAjax();
+    data["token"] = getToken();
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
@@ -94,6 +97,7 @@ function loadSharedEvents () {
     // load new events
     const phpFile = "loadSharedEvents.php";
     let data = createTimeDataForAjax();
+    data["token"] = getToken();
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
@@ -111,6 +115,7 @@ function loadGroupEvents (groupId) {
     const phpFile = "loadGroupEvents.php";
     let data = createTimeDataForAjax();
     data["group_id"] = groupId;
+    data["token"] = getToken();
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),

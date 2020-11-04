@@ -6,7 +6,7 @@ session_start();
 $token=$_POST['token'];
 
 // check token & status
-if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {
+if ($token != $_SESSION['token']) {
     echo json_encode(array(
         "success" => false,
         "message" => "Unauthorized request"
@@ -101,3 +101,4 @@ if (!isset($_SESSION['id'])) {
     ));
 
 }
+?>

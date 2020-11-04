@@ -117,6 +117,7 @@ function loadEvents () {
 
     // create time data
     let data = createTimeDataForAjax();
+    data["token"] = getToken();
 
     // day.getMonth() -- [0,11]->[Jan,Dec]
     const phpFile = "loadCalendar.php";
@@ -175,7 +176,7 @@ function displayOnHTML (events) {
     }
 
     //bond modal data loading request
-    $("#eventDetailModal").on("show.bs.modal", function (trigger){
+    $("#eventDetailModal").on("show.bs.modal", function (trigger) {
         //get event id
         let event = $(trigger.relatedTarget)
         let eventId = event.attr("id").slice(6)
@@ -189,16 +190,18 @@ function displayOnHTML (events) {
 
         $(".alert").hide()
         //ask for event detail
-        $.post("getEventDetail.php",{"id": eventId,
-            "token": getToken()}, function (data) {
+        $.post("getEventDetail.php", {
+            "id": eventId,
+            "token": getToken()
+        }, function (data) {
             if (data.success) {
                 // update modal info
                 // console.log(data)
                 // basic info
                 $("#eventDetailTitle").text(data.title)
                 $("#eventDetailDes").html(data.description)
-                let hour = data.hour < 10? `0${data.hour}` : data.hour
-                let minute = data.minute < 10? `0${data.minute}`:data.minute
+                let hour = data.hour < 10 ? `0${data.hour}` : data.hour
+                let minute = data.minute < 10 ? `0${data.minute}` : data.minute
                 $("#eventDetailTime").text(`${hour}:${minute}`)
                 $("#eventDetailYMD").text(`${data.year}/${data.month}/${data.date}`)
 
@@ -220,7 +223,7 @@ function displayOnHTML (events) {
         })
 
         //bond edit
-        $("#editEvent"+eventId).click(function () {
+        $("#editEvent" + eventId).click(function () {
             $("#eventDetailModal").modal("hide")
 
             // craete submit button
@@ -231,15 +234,17 @@ function displayOnHTML (events) {
             $(".alert").hide()
             //ask for event detail
             //todo: csrf
-            $.post("getEventDetail.php",{"id": eventId,
-                "token": getToken()}, function (data) {
+            $.post("getEventDetail.php", {
+                "id": eventId,
+                "token": getToken()
+            }, function (data) {
                 if (data.success) {
                     // update modal info
                     // editable info
                     $("#editEventName").val(data.title)
                     $("#editEventDes").val(data.description)
-                    let hour = data.hour < 10? `0${data.hour}` : data.hour
-                    let minute = data.minute < 10? `0${data.minute}`:data.minute
+                    let hour = data.hour < 10 ? `0${data.hour}` : data.hour
+                    let minute = data.minute < 10 ? `0${data.minute}` : data.minute
                     $("#editEventHour").val(hour)
                     $("#editEventMinute").val(minute)
                     $("#editEventYear").val(data.year)
@@ -259,7 +264,7 @@ function displayOnHTML (events) {
             })
 
             //bond submit edit
-            $("#editEventSubmit"+eventId).click(function () {
+            $("#editEventSubmit" + eventId).click(function () {
                 let title = $("#editEventName").val()
                 let year = $("#editEventYear").val()
                 let month = $("#editEventMonth").val()
@@ -305,16 +310,18 @@ function displayOnHTML (events) {
 
 
         // bond share
-        $("#shareEvent"+eventId).click(function () {
+        $("#shareEvent" + eventId).click(function () {
             //create sharesubmit button
             $("#shareEventFooter").html(`
             <button type="button" class="btn btn-primary" id="shareEventSubmit${eventId}">Submit</button>
             `)
 
-            $("#shareEventSubmit"+eventId).click(function () {
+            $("#shareEventSubmit" + eventId).click(function () {
                 let recipients = $("#shareEventRecipients").val()
-                $.post("shareEvent.php", { "id":eventId, "recipients": recipients,
-                    "token": getToken()}, function (data) {
+                $.post("shareEvent.php", {
+                    "id": eventId, "recipients": recipients,
+                    "token": getToken()
+                }, function (data) {
                     if (data.success) {
                         // not reacting to these
                         // reload group list
@@ -343,10 +350,12 @@ function displayOnHTML (events) {
 
 
         // bond delete
-        $("#deleteEvent"+eventId).click(function () {
+        $("#deleteEvent" + eventId).click(function () {
             // send delete request
-            $.post("deleteEvent.php", {"id":eventId,
-                "token": getToken()}, function (data) {
+            $.post("deleteEvent.php", {
+                "id": eventId,
+                "token": getToken()
+            }, function (data) {
                 if (data.success) {
                     //close modal and update events
                     $("#eventDetailModal").modal("hide")

@@ -2,6 +2,16 @@
 header("Content-Type: application/json");
 ini_set("session.cookie_httponly", 1);
 session_start();
+// csrf check
+$token=$_POST['token'];
+if ($token != $_SESSION['token']) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Unauthorized request"
+    ));
+    exit();
+}
+// verify user is logged in
 if (!isset($_SESSION['id'])) {
     echo json_encode(array(
         "success"=>false,
@@ -93,7 +103,6 @@ else{
     ));
 
     // todo:add group add events edit events share events CSRF
-    //todo:make sure user is logged in
 }
 
 ?>

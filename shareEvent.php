@@ -1,7 +1,17 @@
 <?php
-//header("Content-Type: application/json");
+header("Content-Type: application/json");
 ini_set("session.cookie_httponly", 1);
 session_start();
+
+// csrf check
+$token=$_POST['token'];
+if ($token != $_SESSION['token'] || !isset($_SESSION['id'])) {
+    echo json_encode(array(
+        "success" => false,
+        "message" => "Unauthorized request"
+    ));
+    exit();
+}
 
 $event_id=(int)$_POST["id"];
 $recipients = preg_match('/[A-Za-z0-9_\s]*$/', $_POST['recipients']) ? $_POST['recipients'] : "";

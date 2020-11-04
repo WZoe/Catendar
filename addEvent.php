@@ -38,3 +38,4 @@ if ($title == "") {
         "success" => true,
     ));
 }
+?>

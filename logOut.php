@@ -7,3 +7,4 @@ unset($_SESSION['username']);
 unset($_SESSION['token']);
 session_destroy();
 
+?>

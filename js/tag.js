@@ -22,6 +22,7 @@ function loadTagEvents (tagId) {
     const phpFile = "loadTagEvents.php";
     let data = createTimeDataForAjax();
     data["tag_id"] = tagId;
+    data["token"] = getToken();
     fetch(phpFile, {
         method: "POST",
         body: JSON.stringify(data),
