@@ -66,7 +66,7 @@ else{
     }
 
     // fetch post values
-    $title = preg_match('/[A-Za-z0-9_\s*#<>?!.,"\']+$/', $_POST['title']) ? $_POST['title'] : "";
+    $title = preg_match('/[A-Za-z0-9_\s*#<>?!.,"\'()]+$/', $_POST['title']) ? $_POST['title'] : "";
     $year = (int)$_POST['year'];
     $month = (int)$_POST['month'];
     $date = (int)$_POST['date'];
@@ -86,8 +86,8 @@ else{
     $stmt_updateEvent = $mysqli->prepare("UPDATE events SET year=?, month=?, date=?, hour=?, minute=?, title=?, description=?, tag_id=? WHERE id=?");
     $stmt_updateEvent->bind_param('iiiiissii', $year, $month, $date,$hour,$minute,$title,$description,$tag, $event_id);
     $stmt_updateEvent->execute();
-    //$affected_rows = $mysqli->affected_rows;
-    //$err = $mysqli->error;
+    $affected_rows = $mysqli->affected_rows;
+    $err = $mysqli->error;
     $stmt_updateEvent->close();
     // if it's a personal event, it might be a shared event
     if($user_id){
@@ -99,7 +99,10 @@ else{
     }
 
     echo json_encode(array(
-        "success" => true
+        "success" => true,
+        "affectedRow"=>$affected_rows,
+        "error"=>$err,
+        "tag"=>$tag 
     ));
 
     // todo:add group add events edit events share events CSRF
