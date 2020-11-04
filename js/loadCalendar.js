@@ -179,6 +179,14 @@ function displayOnHTML (events) {
         //get event id
         let event = $(trigger.relatedTarget)
         let eventId = event.attr("id").slice(6)
+        console.log(`runninng modal init${eventId}`)
+
+        //create  footer buttons
+        $("#eventDetailFooter").html(`
+                            <button type="button" class="btn btn-danger" id="deleteEvent${eventId}">Delete</button>
+                    <button type="button" class="btn btn-secondary" id="shareEvent${eventId}" data-toggle="modal" data-target="#shareEventModal">Share</button>
+                    <button type="button" class="btn btn-primary" id="editEvent${eventId}" data-toggle="modal" data-target="#editEventModal">Edit</button>
+        `)
 
         $(".alert").hide()
         //ask for event detail
@@ -213,10 +221,14 @@ function displayOnHTML (events) {
         })
 
         //bond edit
-        $("#editEvent").click(function () {
+        $("#editEvent"+eventId).click(function () {
             $("#eventDetailModal").modal("hide")
-        })
-        $("#editEventModal").on("show.bs.modal", function (trigger) {
+
+            // craete submit button
+            $("#editEventFooter").html(`
+            <button type="button" class="btn btn-primary" id="editEventSubmit${eventId}">Submit</button>
+            `)
+
             $(".alert").hide()
             //ask for event detail
             //todo: csrf
@@ -247,7 +259,7 @@ function displayOnHTML (events) {
             })
 
             //bond submit edit
-            $("#editEventSubmit").click(function () {
+            $("#editEventSubmit"+eventId).click(function () {
                 let title = $("#editEventName").val()
                 let year = $("#editEventYear").val()
                 let month = $("#editEventMonth").val()
@@ -286,10 +298,19 @@ function displayOnHTML (events) {
                 }, "json")
             })
         })
+        // $("#editEventModal").on("show.bs.modal", function (trigger) {
+        //
+        // })
 
 
         // bond share
-        $("#shareEventSubmit").click(function () {
+        $("#shareEvent"+eventId).click(function () {
+            //create sharesubmit button
+            $("#shareEventFooter").html(`
+            <button type="button" class="btn btn-primary" id="shareEventSubmit${eventId}">Submit</button>
+            `)
+        })
+        $(`#shareEventSubmit${eventId}`).click(function () {
             let recipients = $("#shareEventRecipients").val()
             $.post("shareEvent.php", { "id":eventId, "recipients": recipients}, function (data) {
                 if (data.success) {
@@ -318,7 +339,7 @@ function displayOnHTML (events) {
         })
 
         // bond delete
-        $("#deleteEvent").click(function () {
+        $("#deleteEvent"+eventId).click(function () {
             // send delete request
             $.post("deleteEvent.php", {"id":eventId}, function (data) {
                 if (data.success) {
