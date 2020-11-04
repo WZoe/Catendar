@@ -41,7 +41,7 @@ else{
         $stmt_getGroup->execute();
         $stmt_getGroup->bind_result($user_group_id);
         $user_group_ids = array();
-        while ($stmt->fetch()) {
+        while ($stmt_getGroup->fetch()) {
             array_push($user_group_ids,$user_group_id);
         }
         $stmt_getGroup->close();
@@ -55,6 +55,7 @@ else{
         }
     }
 
+    // fetch post values
     $title = preg_match('/[A-Za-z0-9_\s*#<>?!.,"\']+$/', $_POST['title']) ? $_POST['title'] : "";
     $year = (int)$_POST['year'];
     $month = (int)$_POST['month'];
@@ -71,78 +72,24 @@ else{
         ));
         exit();
     }
-    // update personal / shared event
+    // update event
+    $stmt_updateEvent = $mysqli->prepare("UPDATE events SET year=?, month=?, date=?, hour=?, minute=?, title=?, description=?, tag_id=? WHERE id=?");
+    $stmt_updateEvent->bind_param('iiiiissii', $year, $month, $date,$hour,$minute,$title,$description,$tag, $event_id);
+    $stmt_updateEvent->execute();
+    //$affected_rows = $mysqli->affected_rows;
+    //$err = $mysqli->error;
+    $stmt_updateEvent->close();
+    // if it's a personal event, it might be a shared event
     if($user_id){
-        $stmt_updatePersonal = $mysqli->prepare("UPDATE events SET year=?, month=?, date=?, hour=?, minute=?, title=?, description=?, tag_id=? WHERE id=? AND user_id=?");
-        $stmt_updatePersonal->bind_param('iiiiissiii', $year, $month, $date,$hour,$minute,$title,$description,$tag, $event_id, $user_id);
-        $stmt_updatePersonal->execute();
-        $stmt_updatePersonal->close();
-
         // update shared copies of this event
-        $stmt_updateShared = $mysqli->prepare("UPDATE events SET year=?, month=?, date=?, hour=?, minute=?, title=?, description=?, tag_id=? WHERE original_id=? AND author_id=?");
-        $stmt_updateShared->bind_param('iiiiissiii', $year, $month, $date,$hour,$minute,$title,$description,$tag,$event_id,$author_id);
+        $stmt_updateShared = $mysqli->prepare("UPDATE events SET year=?, month=?, date=?, hour=?, minute=?, title=?, description=?, tag_id=? WHERE original_id=?");
+        $stmt_updateShared->bind_param('iiiiissii', $year, $month, $date,$hour,$minute,$title,$description,$tag,$event_id);
         $stmt_updateShared->execute();
         $stmt_updateShared->close();
     }
-    // update group event
-    if($group_id){
-        $stmt_updateGroup = $mysqli->prepare("UPDATE events SET year=?, month=?, date=?, hour=?, minute=?, title=?, description=?, tag_id=? WHERE id=? AND group_id=?");
-        $stmt_updateGroup->bind_param('iiiiissiii', $year, $month, $date,$hour,$minute,$title,$description,$tag, $event_id, $user_id);
-        $stmt_updateGroup->execute();
-        $stmt_updateGroup->close();
-    }
-
-    // get updated event
-    $stmt_loadUpdated = $mysqli->prepare("SELECT year, month, date, hour, minute, title, description, tag_id, group_id, user_id, author_id FROM events WHERE id=?");
-    $stmt_loadUpdated->bind_param('i', $event_id);
-    $stmt_loadUpdated->execute();
-    $stmt_loadUpdated->bind_result($year, $month, $date, $hour, $minute, $title, $description, $tag_id, $group_id, $user_id, $author_id);
-    $stmt_loadUpdated->fetch();
-    $stmt_loadUpdated->close();
-
-    //get author name
-    $stmt = $mysqli->prepare("select username from users where id=?");
-    $stmt->bind_param('i', $author_id);
-    $stmt->execute();
-    $stmt->bind_result($author);
-    $stmt->fetch();
-    $stmt->close();
-    // get group name
-    if($group_id) {
-        $stmt = $mysqli->prepare("select name from groups where id=?");
-        $stmt->bind_param('i', $group_id);
-        $stmt->execute();
-        $stmt->bind_result($group);
-        $stmt->fetch();
-        $stmt->close();
-    } else {
-        $group = null;
-    }
-    //get tag name
-    $stmt = $mysqli->prepare("select name from tags where id=?");
-    $stmt->bind_param('i', $tag_id);
-    $stmt->execute();
-    $stmt->bind_result($tag);
-    $stmt->fetch();
-    $stmt->close();
-
-    //shared?
-    $shared = $user_id == $author_id? false:true;
 
     echo json_encode(array(
-        "success" => true,
-        "year" => $year,
-        "month" =>$month,
-        "date"=>$date,
-        "hour"=>$hour,
-        "minute"=>$minute,
-        "title"=>htmlentities($title),
-        "description"=>nl2br(htmlentities($description)),
-        "user_id"=>$user_id,
-        "group"=>htmlentities($group),
-        "author"=>htmlentities($author),
-        "tag"=>htmlentities($tag),
-        "shared" => $shared
+        "success" => true
     ));
 
     // todo:add group add events edit events share events CSRF
