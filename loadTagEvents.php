@@ -3,8 +3,23 @@
     ini_set("session.cookie_httponly", 1);
     session_start();
 
+    // retrieve data posted via fetch()
+    $json_str = file_get_contents('php://input');
+    $json_obj = json_decode($json_str, true);
+    $tag_id = (int)$json_obj['tag_id'];
+    $currentYear = (int)$json_obj['currentYear'];
+    $currentMonth = (int)$json_obj['currentMonth'];
+    $prevMonth = (int)$json_obj['prevMonth'];
+    $nextMonth = (int)$json_obj['nextMonth'];
+    if($prevMonth != -1){
+        $prevMonthStartDate = (int)$json_obj['prevMonthStartDate'];
+    }
+    if($nextMonth != -1){
+        $nextMonthEndDate = (int)$json_obj['nextMonthEndDate'];
+    }
+
     // csrf check
-    $token=$_POST['token'];
+    $token=$json_obj['token'];
     if ($token != $_SESSION['token']) {
         echo json_encode(array(
             "success" => false,
@@ -19,21 +34,6 @@
             "message"=>"user is not logged in"
         ));
     } else {
-        // retrieve data posted via fetch()
-        $json_str = file_get_contents('php://input');
-        $json_obj = json_decode($json_str, true);
-        $tag_id = (int)$json_obj['tag_id'];
-        $currentYear = (int)$json_obj['currentYear'];
-        $currentMonth = (int)$json_obj['currentMonth'];
-        $prevMonth = (int)$json_obj['prevMonth'];
-        $nextMonth = (int)$json_obj['nextMonth'];
-        if($prevMonth != -1){
-            $prevMonthStartDate = (int)$json_obj['prevMonthStartDate'];
-        }
-        if($nextMonth != -1){
-            $nextMonthEndDate = (int)$json_obj['nextMonthEndDate'];
-        }
-
         $personal_events = array();
         $shared_events = array();
         $group_events = array();
