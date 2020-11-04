@@ -12,12 +12,13 @@ $currentMonth = (int)$json_obj['currentMonth'];
 $prevMonth = (int)$json_obj['prevMonth'];
 $nextMonth = (int)$json_obj['nextMonth'];
 if ($prevMonth != -1) {
+    $prevMonthYear = (int)$json_obj['prevMonthYear'];
     $prevMonthStartDate = (int)$json_obj['prevMonthStartDate'];
 }
 if ($nextMonth != -1) {
+    $nextMonthYear = (int)$json_obj['nextMonthYear'];
     $nextMonthEndDate = (int)$json_obj['nextMonthEndDate'];
 }
-
 // csrf check
 $token = $json_obj['token'];
 if ($token != $_SESSION['token']) {
@@ -41,8 +42,8 @@ if (!isset($_SESSION['id'])) {
     // fetch daily events by time
     // fetch group events
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
-    $stmt_group1 = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, tag_id, author_id FROM events WHERE group_id=? AND year=? AND ((month=?) OR (month=? AND date>=?) OR (month=? AND date<=?)) ORDER BY hour, minute");
-    $stmt_group1->bind_param('iiiiiii', $group_id, $currentYear, $currentMonth, $prevMonth, $prevMonthStartDate, $nextMonth, $nextMonthEndDate);
+    $stmt_group1 = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, tag_id, author_id FROM events WHERE group_id=? AND ((year=? AND month=?) OR (month=? AND year=? AND date>=?) OR (month=? AND year=? AND date<=?)) ORDER BY hour, minute");
+    $stmt_group1->bind_param('iiiiiiiii', $group_id, $currentYear, $currentMonth, $prevMonth, $prevMonthYear, $prevMonthStartDate, $nextMonth, $nextMonthYear, $nextMonthEndDate);
     $stmt_group1->execute();
     $stmt_group1->bind_result($event_id, $year, $month, $date, $hour, $minute, $title, $description, $tag_id, $author_id);
     while ($stmt_group1->fetch()) {

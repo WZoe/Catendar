@@ -11,9 +11,11 @@ $currentMonth = (int)$json_obj['currentMonth'];
 $prevMonth = (int)$json_obj['prevMonth'];
 $nextMonth = (int)$json_obj['nextMonth'];
 if ($prevMonth != -1) {
+    $prevMonthYear = (int)$json_obj['prevMonthYear'];
     $prevMonthStartDate = (int)$json_obj['prevMonthStartDate'];
 }
 if ($nextMonth != -1) {
+    $nextMonthYear = (int)$json_obj['nextMonthYear'];
     $nextMonthEndDate = (int)$json_obj['nextMonthEndDate'];
 }
 
@@ -40,8 +42,8 @@ if (!isset($_SESSION['id'])) {
     // fetch daily events by time
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
     // fetch shared events
-    $stmt_shared = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, tag_id, author_id FROM events WHERE user_id=? AND author_id!=? AND year=? AND ((month=?) OR (month=? AND date>=?) OR (month=? AND date<=?)) ORDER BY hour, minute");
-    $stmt_shared->bind_param('iiiiiiii', $_SESSION["id"], $_SESSION["id"], $currentYear, $currentMonth, $prevMonth, $prevMonthStartDate, $nextMonth, $nextMonthEndDate);
+    $stmt_shared = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, tag_id, author_id FROM events WHERE user_id=? AND author_id!=? AND ((year=? AND month=?) OR (month=? AND year=? AND date>=?) OR (month=? AND year=? AND date<=?)) ORDER BY hour, minute");
+    $stmt_shared->bind_param('iiiiiiiiii', $_SESSION["id"], $_SESSION["id"], $currentYear, $currentMonth, $prevMonth, $prevMonthYear, $prevMonthStartDate, $nextMonth, $nextMonthYear, $nextMonthEndDate);
     $stmt_shared->execute();
     $stmt_shared->bind_result($event_id, $year, $month, $date, $hour, $minute, $title, $description, $tag_id, $author_id);
     while ($stmt_shared->fetch()) {

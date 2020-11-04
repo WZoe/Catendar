@@ -12,9 +12,11 @@ $currentMonth = (int)$json_obj['currentMonth'];
 $prevMonth = (int)$json_obj['prevMonth'];
 $nextMonth = (int)$json_obj['nextMonth'];
 if ($prevMonth != -1) {
+    $prevMonthYear = (int)$json_obj['prevMonthYear'];
     $prevMonthStartDate = (int)$json_obj['prevMonthStartDate'];
 }
 if ($nextMonth != -1) {
+    $nextMonthYear = (int)$json_obj['nextMonthYear'];
     $nextMonthEndDate = (int)$json_obj['nextMonthEndDate'];
 }
 
@@ -41,8 +43,8 @@ if (!isset($_SESSION['id'])) {
     // fetch daily events by time
     // fetch personal events
     $mysqli = new mysqli('ec2-54-191-166-77.us-west-2.compute.amazonaws.com', '503', '503', 'calendar');
-    $stmt_personal = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, author_id FROM events WHERE tag_id=? AND user_id=? AND author_id=? AND year=? AND ((month=?) OR (month=? AND date>=?) OR (month=? AND date<=?)) ORDER BY hour, minute");
-    $stmt_personal->bind_param('iiiiiiiii', $tag_id, $_SESSION["id"], $_SESSION["id"], $currentYear, $currentMonth, $prevMonth, $prevMonthStartDate, $nextMonth, $nextMonthEndDate);
+    $stmt_personal = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, author_id FROM events WHERE tag_id=? AND user_id=? AND author_id=? AND ((year=? AND month=?) OR (month=? AND year=? AND date>=?) OR (month=? AND year=? AND date<=?)) ORDER BY hour, minute");
+    $stmt_personal->bind_param('iiiiiiiiiii', $tag_id, $_SESSION["id"], $_SESSION["id"], $currentYear, $currentMonth, $prevMonth, $prevMonthYear, $prevMonthStartDate, $nextMonth, $nextMonthYear, $nextMonthEndDate);
     $stmt_personal->execute();
     $stmt_personal->bind_result($event_id, $year, $month, $date, $hour, $minute, $title, $description, $author_id);
     while ($stmt_personal->fetch()) {
@@ -73,8 +75,8 @@ if (!isset($_SESSION['id'])) {
     $stmt_personal->close();
 
     // fetch shared events
-    $stmt_shared = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, author_id FROM events WHERE tag_id=? AND user_id=? AND author_id!=? AND year=? AND ((month=?) OR (month=? AND date>=?) OR (month=? AND date<=?)) ORDER BY hour, minute");
-    $stmt_shared->bind_param('iiiiiiiii', $tag_id, $_SESSION["id"], $_SESSION["id"], $currentYear, $currentMonth, $prevMonth, $prevMonthStartDate, $nextMonth, $nextMonthEndDate);
+    $stmt_shared = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, author_id FROM events WHERE tag_id=? AND user_id=? AND author_id!=? AND ((year=? AND month=?) OR (month=? AND year=? AND date>=?) OR (month=? AND year=? AND date<=?)) ORDER BY hour, minute");
+    $stmt_shared->bind_param('iiiiiiiiiii', $tag_id, $_SESSION["id"], $_SESSION["id"], $currentYear, $currentMonth, $prevMonth, $prevMonthYear, $prevMonthStartDate, $nextMonth, $nextMonthYear, $nextMonthEndDate);
     $stmt_shared->execute();
     $stmt_shared->bind_result($event_id, $year, $month, $date, $hour, $minute, $title, $description, $author_id);
     while ($stmt_shared->fetch()) {
@@ -117,8 +119,8 @@ if (!isset($_SESSION['id'])) {
     $stmt_group1->close();
 
     foreach ($groups as $group_id) {
-        $stmt_group2 = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, author_id FROM events WHERE tag_id=? AND group_id=? AND year=? AND ((month=?) OR (month=? AND date>=?) OR (month=? AND date<=?)) ORDER BY hour, minute");
-        $stmt_group2->bind_param('iiiiiiii', $tag_id, $group_id, $currentYear, $currentMonth, $prevMonth, $prevMonthStartDate, $nextMonth, $nextMonthEndDate);
+        $stmt_group2 = $mysqli->prepare("SELECT id, year, month, date, hour, minute, title, description, author_id FROM events WHERE tag_id=? AND group_id=? AND ((year=? AND month=?) OR (month=? AND year=? AND date>=?) OR (month=? AND year=? AND date<=?)) ORDER BY hour, minute");
+        $stmt_group2->bind_param('iiiiiiiiii', $tag_id, $group_id, $currentYear, $currentMonth, $prevMonth, $prevMonthYear, $prevMonthStartDate, $nextMonth, $nextMonthYear, $nextMonthEndDate);
         $stmt_group2->execute();
         $stmt_group2->bind_result($event_id, $year, $month, $date, $hour, $minute, $title, $description, $author_id);
         while ($stmt_group2->fetch()) {
