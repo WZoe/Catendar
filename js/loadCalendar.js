@@ -179,7 +179,6 @@ function displayOnHTML (events) {
         //get event id
         let event = $(trigger.relatedTarget)
         let eventId = event.attr("id").slice(6)
-        console.log(`runninng modal init${eventId}`)
 
         //create  footer buttons
         $("#eventDetailFooter").html(`
@@ -310,7 +309,7 @@ function displayOnHTML (events) {
             <button type="button" class="btn btn-primary" id="shareEventSubmit${eventId}">Submit</button>
             `)
         })
-        $(`#shareEventSubmit${eventId}`).click(function () {
+        $("#shareEventSubmit"+eventId).click(function () {
             let recipients = $("#shareEventRecipients").val()
             $.post("shareEvent.php", { "id":eventId, "recipients": recipients}, function (data) {
                 if (data.success) {
