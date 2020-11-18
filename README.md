@@ -17,4 +17,8 @@ username:eimee  password:eimee
 
 - User can share their events with other users, who will then get a duplicate event.
 
-- User can create groups. Event created as group events will display on all members' calendars and members can cooperate on group events.
+- User can create groups. Event created as group events will display on all members' calendars and members can cooperate on group events.  
+  
+Grading Comments:  
+-2 safe from xss attacks: innerHTML is used with no escaping in some places for user generated input  
+This is one of the best calendars I've seen, awesome job!
